@@ -3,9 +3,9 @@
 ## Making changes
 
 * Make sure your code complies with [Java code conventions from Oracle](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
-** 2 spaces should be used for XML and FXML code indentation.
-** Avoid empty lines in `pom.xml` file.
-** Use tabs for java code indentation.
+  * 2 spaces should be used for XML and FXML code indentation.
+  * Avoid empty lines in `pom.xml` file.
+  * Use tabs for java code indentation.
 * Make commits of logical units.
 * Commit messages should be in the imperative present tense, e.g. "Add README file"
 * Please consider to add
