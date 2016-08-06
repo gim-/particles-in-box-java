@@ -2,8 +2,8 @@
 
 ## Making changes
 
-* Make sure your code complies with [Java code conventions from Oracle](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
-  * Line length is an exception, you can use 120 symbols per line instead of 80 as described by Oracle.
+* Make sure your code complies with [Java code conventions from Sun Microsystems](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+  * Line length is an exception, you can use 120 symbols per line instead of 80.
   * Don not use tabs for indentation at all, this is another exception.
   * You can check if code complies with project conventions using command `mvn site`.
   * 2 spaces should be used for XML and FXML code indentation.
