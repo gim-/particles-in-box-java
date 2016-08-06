@@ -26,11 +26,11 @@ package eu.mivrenik.particles.controller;
  */
 public class NewExperimentController {
 
-	/**
-	 * Run experiment button click callback.
-	 */
-	public void onRunClicked() {
-		// TODO Do stuff
-		System.out.println("Run button clicked: " + Thread.currentThread());
-	}
+    /**
+     * Run experiment button click callback.
+     */
+    public final void onRunClicked() {
+        // TODO Do stuff
+        System.out.println("Run button clicked: " + Thread.currentThread());
+    }
 }

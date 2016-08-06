@@ -32,24 +32,33 @@ import javafx.stage.Stage;
  * Main application class that is used as entry point.
  */
 public class AppEntryPoint extends Application {
-	private static final Logger LOG = Logger.getLogger(AppEntryPoint.class.getName());
+    /**
+     * Class-wide logger.
+     */
+    private static final Logger LOG = Logger.getLogger(AppEntryPoint.class.getName());
 
-	public static void main(String[] args) throws Exception {
-		launch(args);
-	}
+    /**
+     * Application entry point.
+     *
+     * @param args
+     *            Launch arguments
+     */
+    public static void main(final String[] args) {
+        launch(args);
+    }
 
-	/**
-	 * Initialise main view stage.
-	 */
-	@Override
-	public void start(Stage stage) throws Exception {
-		LOG.info("Starting particles in box application");
-		Scene scene = NewExperimentScene.newInstance();
-		stage.setTitle("New experiment");
-		stage.setScene(scene);
-		stage.show();
-		// Restrict resizing
-		stage.setMinHeight(scene.getHeight());
-		stage.setMinWidth(scene.getWidth());
-	}
+    /**
+     * Initialise main view stage.
+     */
+    @Override
+    public final void start(final Stage stage) throws Exception {
+        LOG.info("Starting particles in box application");
+        Scene scene = NewExperimentScene.newInstance();
+        stage.setTitle("New experiment");
+        stage.setScene(scene);
+        stage.show();
+        // Restrict resizing
+        stage.setMinHeight(scene.getHeight());
+        stage.setMinWidth(scene.getWidth());
+    }
 }
