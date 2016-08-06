@@ -1,0 +1,22 @@
+/* Application wide styles */
+
+.option-group-title {
+  -fx-font-weight: bold;
+  -fx-font-size: 14;
+}
+
+.option-title {
+	-fx-padding: 0 0 0 5;
+}
+
+.option-input {
+	-fx-max-width: 100;
+}
+
+.drop-file-space {
+	-fx-border-style: dashed;
+	-fx-border-radius: 30;
+	-fx-border-width: 5;
+	-fx-border-insets: 5 10 10 10;
+	-fx-border-color: rgb(186,189,182);
+}

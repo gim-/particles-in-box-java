@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.tbee.javafx.scene.layout.fxml.MigPane?>
+<!-- -->
+<MigPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+  minWidth="-Infinity" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.mivrenik.particles.controller.NewExperimentController"
+  stylesheets="@/styles/styles.css" layout="insets 10"
+  cols="[150,grow][]20[150,grow][]20[150,grow][]">
+
+  <!-- 1st row -->
+  <Label text="Particle settings" MigPane.cc="span 2 1"
+    styleClass="option-group-title" />
+  <Label text="Speed change after collision" MigPane.cc="span 2 1"
+    styleClass="option-group-title" />
+  <Label text="Box geomentry" MigPane.cc="span 2 1,wrap"
+    styleClass="option-group-title" />
+
+  <!-- 2nd row -->
+  <Label text="Count (left side)" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.IntegerSpinnerValueFactory
+        min="1" max="1000" initialValue="500" amountToStepBy="1" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Top" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Width" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 3rd row -->
+  <Label text="Count (right side)" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.IntegerSpinnerValueFactory
+        min="1" max="1000" initialValue="500" amountToStepBy="1" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Bottom" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Height" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 4th row -->
+  <Label text="Rodius" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Sides" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Barrier X" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 5th row -->
+  <Label text="Initial speed" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Misc settings" MigPane.cc="span 2 1" styleClass="option-group-title" />
+  <Label text="Barrier width" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 6th row -->
+  <Label text="Speed loss factor" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="g" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Hole Y" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 7th row -->
+  <Label text="Output file" MigPane.cc="span 2 1" styleClass="option-group-title" />
+  <Label text="Min. to simulate" styleClass="option-title" />
+  <Spinner styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+  <Label text="Hole height" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 8th row -->
+  <TextField MigPane.cc="grow" />
+  <Button text="..." />
+  <Label text="Frames/second" styleClass="option-title" />
+  <Spinner maxWidth="80" MigPane.cc="wrap" styleClass="option-input">
+    <valueFactory>
+      <SpinnerValueFactory.DoubleSpinnerValueFactory
+        min="0.01" max="100" initialValue="10.0" amountToStepBy="0.01" />
+    </valueFactory>
+  </Spinner>
+
+  <!-- 9th row -->
+  <Label text="Or open an existing file" MigPane.cc="span,wrap"
+    styleClass="option-group-title" />
+
+  <!-- 10th row -->
+  <Pane prefHeight="200" styleClass="drop-file-space" MigPane.cc="span,grow,push,wrap" />
+
+  <!-- Last row -->
+  <ButtonBar MigPane.cc="span,grow">
+    <buttons>
+      <Button text="Run" onMouseClicked="#onRunClicked" />
+    </buttons>
+  </ButtonBar>
+</MigPane>
