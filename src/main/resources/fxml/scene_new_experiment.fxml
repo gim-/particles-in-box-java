@@ -5,11 +5,7 @@
 <?import org.tbee.javafx.scene.layout.fxml.MigPane?>
 <!-- -->
 <MigPane
-  maxHeight="-Infinity"
-  maxWidth="-Infinity"
-  minHeight="-Infinity"
-  minWidth="-Infinity"
-  prefWidth="700.0"
+  fx:id="rootLayout"
   xmlns="http://javafx.com/javafx/8.0.76-ea"
   xmlns:fx="http://javafx.com/fxml/1"
   fx:controller="eu.mivrenik.particles.controller.NewExperimentController"
@@ -288,8 +284,8 @@
 
   <!-- 10th row -->
   <Pane
+    fx:id="dropFileSpace"
     prefHeight="200"
-    styleClass="drop-file-space"
     MigPane.cc="span,grow,push,wrap" />
 
   <!-- Last row -->

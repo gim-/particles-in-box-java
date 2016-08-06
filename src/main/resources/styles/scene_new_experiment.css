@@ -1,5 +1,9 @@
 /* New experiment scene styles */
 
+#rootLayout {
+	-fx-pref-width: 700.0;
+}
+
 .option-group-title {
 	-fx-font-weight: bold;
 	-fx-font-size: 14;
@@ -13,7 +17,7 @@
 	-fx-max-width: 100;
 }
 
-.drop-file-space {
+#dropFileSpace {
 	-fx-border-style: dashed;
 	-fx-border-radius: 30;
 	-fx-border-width: 5;
