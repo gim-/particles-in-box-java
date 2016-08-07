@@ -32,9 +32,6 @@ import javafx.stage.Stage;
  * Main application class that is used as entry point.
  */
 public class AppEntryPoint extends Application {
-    /**
-     * Class-wide logger.
-     */
     private static final Logger LOG = Logger.getLogger(AppEntryPoint.class.getName());
 
     /**
