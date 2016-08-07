@@ -21,16 +21,70 @@
  */
 package eu.mivrenik.particles.controller;
 
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
+
 /**
  * New experiment scene controller.
  */
 public class NewExperimentController {
+    private static final Logger LOG = Logger.getLogger(NewExperimentController.class.getName());
 
     /**
      * Run experiment button click callback.
      */
     public final void onRunClicked() {
         // TODO Do stuff
-        System.out.println("Run button clicked: " + Thread.currentThread());
+        LOG.info("Run button clicked: " + Thread.currentThread());
+    }
+
+    /**
+     * Called when drag entered the file drop area.
+     */
+    public final void onDragEntered() {
+        // TODO Show "drop" message
+    }
+
+    /**
+     * Called when drag exited from the file drop area.
+     */
+    public final void onDragExited() {
+        // TODO Restore default message
+    }
+
+    /**
+     * Drag dropped to the file drop area.
+     *
+     * @param event
+     *            Event data.
+     */
+    public final void onDragDropped(final DragEvent event) {
+        boolean success = false;
+        LOG.log(Level.FINE, "Drag dropped: " + event.getDragboard().getString());
+        if (event.getDragboard().hasFiles()) {
+            File file = event.getDragboard().getFiles().get(0);
+            // Check if file has a valid extension
+            if (file.getName().endsWith(".bin")) {
+                // TODO Handle file
+                success = true;
+            }
+        }
+        event.setDropCompleted(success);
+        event.consume();
+    }
+
+    /**
+     * Drag activity detected over the file drop area.
+     *
+     * @param event
+     *            Event data.
+     */
+    public final void onDragOver(final DragEvent event) {
+        event.acceptTransferModes(TransferMode.LINK);
+        event.consume();
     }
 }

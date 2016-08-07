@@ -286,6 +286,10 @@
   <Pane
     fx:id="dropFileSpace"
     prefHeight="200"
+    onDragEntered="#onDragEntered"
+    onDragExited="#onDragExited"
+    onDragDropped="#onDragDropped"
+    onDragOver="#onDragOver"
     MigPane.cc="span,grow,push,wrap" />
 
   <!-- Last row -->
