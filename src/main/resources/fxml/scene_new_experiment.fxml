@@ -258,8 +258,12 @@
   </Spinner>
 
   <!-- 8th row -->
-  <TextField MigPane.cc="grow" />
-  <Button text="..." />
+  <TextField
+    fx:id="outputFileTextField"
+    MigPane.cc="grow" />
+  <Button
+    text="..."
+    onMouseClicked="#onChooseOutputFileClicked" />
   <Label
     text="Frames/second"
     styleClass="option-title" />

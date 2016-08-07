@@ -25,8 +25,12 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.stage.FileChooser;
 
 /**
  * New experiment scene controller.
@@ -34,12 +38,31 @@ import javafx.scene.input.TransferMode;
 public class NewExperimentController {
     private static final Logger LOG = Logger.getLogger(NewExperimentController.class.getName());
 
+    @FXML
+    private Parent rootLayout;
+    @FXML
+    private TextField outputFileTextField;
+
     /**
      * Run experiment button click callback.
      */
     public final void onRunClicked() {
         // TODO Do stuff
         LOG.info("Run button clicked: " + Thread.currentThread());
+    }
+
+    /**
+     * Choose output file button click callback.
+     */
+    public final void onChooseOutputFileClicked() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose output file");
+        fileChooser.setInitialFileName("particles-in-box-out.bin");
+        File outputFile = fileChooser.showSaveDialog(rootLayout.getScene().getWindow());
+        if (outputFile != null) {
+            LOG.info("Chosen output file: " + outputFile);
+            outputFileTextField.setText(outputFile.getAbsolutePath());
+        }
     }
 
     /**
@@ -70,6 +93,7 @@ public class NewExperimentController {
             // Check if file has a valid extension
             if (file.getName().endsWith(".bin")) {
                 // TODO Handle file
+                LOG.info("Dropped file: " + file);
                 success = true;
             }
         }
