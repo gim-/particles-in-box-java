@@ -22,6 +22,9 @@
 package eu.mivrenik.particles.scene;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,10 +54,14 @@ public final class NewExperimentScene extends Scene {
         String fxmlFile = "/fxml/scene_new_experiment.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent rootNode;
+        InputStream in = null;
         try {
-            rootNode = (Parent) loader.load(NewExperimentScene.class.getResourceAsStream(fxmlFile));
+            in = NewExperimentScene.class.getResourceAsStream(fxmlFile);
+            rootNode = (Parent) loader.load(in);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeQuietly(in);
         }
         return new NewExperimentScene(rootNode);
     }
