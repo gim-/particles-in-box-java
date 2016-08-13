@@ -35,7 +35,9 @@ import java.io.ObjectInputStream;
 
 import java.util.Random;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 public class ParticleTest {
@@ -164,7 +166,7 @@ public class ParticleTest {
     public void distanceToOurself() throws Exception {
         Particle particle = particleGenerator.nextParticle();
 
-        assertEquals(particle.getDistanceTo(particle), 0.0, eps);
+        assertEquals(0.0, particle.getDistanceTo(particle), eps);
     }
 
     @Test
@@ -183,7 +185,7 @@ public class ParticleTest {
         Particle particle1 = particleGenerator.nextParticleSpecifiedCoordinates(newX, newY);
         Particle particle2 = particleGenerator.nextParticleSpecifiedCoordinates(newX, newY);
 
-        assertEquals(particle1.getDistanceTo(particle2), 0.0, eps);
+        assertEquals(0.0, particle1.getDistanceTo(particle2), eps);
     }
 
     @Test
@@ -215,7 +217,7 @@ public class ParticleTest {
         Particle particle1 = particleGenerator.nextParticleSpecifiedCoordinates(newX1, newY1);
         Particle particle2 = particleGenerator.nextParticleSpecifiedCoordinates(newX2, newY2);
 
-        assertEquals(particle1.overlaps(particle2, particleR), false);
+        assertFalse(particle1.overlaps(particle2, particleR));
     }
 
     @Test
@@ -231,14 +233,14 @@ public class ParticleTest {
         Particle particle1 = particleGenerator.nextParticleSpecifiedCoordinates(newX1, newY1);
         Particle particle2 = particleGenerator.nextParticleSpecifiedCoordinates(newX2, newY2);
 
-        assertEquals(particle1.overlaps(particle2, particleR), true);
+        assertTrue(particle1.overlaps(particle2, particleR));
     }
 
     @Test
     public void overlappingWithItself() throws Exception {
         Particle particle = particleGenerator.nextParticle();
 
-        assertEquals(particle.overlaps(particle, particleR), true);
+        assertTrue(particle.overlaps(particle, particleR));
     }
 
     @Test
@@ -257,7 +259,7 @@ public class ParticleTest {
         Particle readedParticle = (Particle)inObj.readObject();
         inObj.close();
 
-        assertEquals(particle.equals(readedParticle), true);
+        assertTrue(particle.equals(readedParticle));
         assertEquals(sourceId, readedParticle.getId());
     }
 }
