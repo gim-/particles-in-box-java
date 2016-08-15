@@ -72,6 +72,10 @@ public class Particle implements Serializable {
         return id;
     }
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public Particle move(final double x, final double y) {
         posX = x;
         posY = y;
@@ -161,4 +165,58 @@ public class Particle implements Serializable {
                 getVelocityY()
         );
     }
+
+    public static class Builder {
+        private double posX;
+        private double posY;
+        private double velocityX;
+        private double velocityY;
+        private int id;
+
+        public Builder setId(final int id) {
+            this.id = id;
+
+            return this;
+        }
+
+        public Builder setPosition(final double posX, final double posY) {
+            this.posX = posX;
+            this.posY = posY;
+
+            return this;
+        }
+
+        public Builder setVelocity(final double velocityX, final double velocityY) {
+            this.velocityX = velocityX;
+            this.velocityY = velocityY;
+
+            return this;
+        }
+
+        public double getPosX() {
+            return posX;
+        }
+
+        public double getPosY() {
+            return posY;
+        }
+
+        public double getVelocityX() {
+            return velocityX;
+        }
+
+        public double getVelocityY() {
+            return velocityY;
+        }
+
+        public double getId() {
+            return id;
+        }
+
+        public Particle build() {
+            return new Particle(id, posX, posY, velocityX, velocityY);
+        }
+    }
 }
+
+
