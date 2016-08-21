@@ -50,7 +50,10 @@ package eu.mivrenik.particles.model;
  *                          ^ barrierPosX
  */
 
-public final class WorldSettings {
+public final class ExperimentSettings {
+    private final int particleCountLeft;
+    private final int particleCountRight;
+    private final float initialSpeed;
     private final float boxWidth;
     private final float boxHeight;
     private final float speedDeltaTop;
@@ -60,6 +63,9 @@ public final class WorldSettings {
     private final float barrierWidth;
     private final float holePosY;
     private final float holeHeight;
+    private final int fps;
+    private final int length;
+    private final int seed;
 
     /**
      * Speed loss determines how much energy a particle
@@ -71,7 +77,10 @@ public final class WorldSettings {
     private final float particleRadius;
     private final float g;
 
-    private WorldSettings(final Builder builder) {
+    private ExperimentSettings(final Builder builder) {
+        particleCountLeft = builder.getParticleCountLeft();
+        particleCountRight = builder.getParticleCountRight();
+        initialSpeed = builder.getInitialSpeed();
         boxWidth = builder.getBoxWidth();
         boxHeight = builder.getBoxHeight();
         speedDeltaTop = builder.getSpeedDeltaTop();
@@ -84,6 +93,25 @@ public final class WorldSettings {
         speedLoss = builder.getSpeedLoss();
         particleRadius = builder.getParticleRadius();
         g = builder.getG();
+        fps = builder.getFps();
+        length = builder.getLength();
+        seed = builder.getSeed();
+    }
+
+    public int getParticleCountLeft() {
+        return particleCountLeft;
+    }
+
+    public int getParticleCountRight() {
+        return particleCountRight;
+    }
+
+    public int getParticleCount() {
+        return particleCountLeft + particleCountRight;
+    }
+
+    public double getInitialSpeed() {
+        return initialSpeed;
     }
 
     public float getBoxWidth() {
@@ -134,13 +162,28 @@ public final class WorldSettings {
         return g;
     }
 
+    public int getFps() {
+        return fps;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getSeed() {
+        return seed;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WorldSettings that = (WorldSettings) o;
+        ExperimentSettings that = (ExperimentSettings) o;
 
+        if (particleCountLeft != that.particleCountLeft) return false;
+        if (particleCountRight != that.particleCountRight) return false;
+        if (Float.compare(that.initialSpeed, initialSpeed) != 0) return false;
         if (Float.compare(that.boxWidth, boxWidth) != 0) return false;
         if (Float.compare(that.boxHeight, boxHeight) != 0) return false;
         if (Float.compare(that.speedDeltaTop, speedDeltaTop) != 0) return false;
@@ -150,14 +193,21 @@ public final class WorldSettings {
         if (Float.compare(that.barrierWidth, barrierWidth) != 0) return false;
         if (Float.compare(that.holePosY, holePosY) != 0) return false;
         if (Float.compare(that.holeHeight, holeHeight) != 0) return false;
+        if (fps != that.fps) return false;
+        if (length != that.length) return false;
+        if (seed != that.seed) return false;
         if (Float.compare(that.speedLoss, speedLoss) != 0) return false;
         if (Float.compare(that.particleRadius, particleRadius) != 0) return false;
         return Float.compare(that.g, g) == 0;
+
     }
 
     @Override
     public int hashCode() {
-        int result = (boxWidth != +0.0f ? Float.floatToIntBits(boxWidth) : 0);
+        int result = particleCountLeft;
+        result = 31 * result + particleCountRight;
+        result = 31 * result + (initialSpeed != +0.0f ? Float.floatToIntBits(initialSpeed) : 0);
+        result = 31 * result + (boxWidth != +0.0f ? Float.floatToIntBits(boxWidth) : 0);
         result = 31 * result + (boxHeight != +0.0f ? Float.floatToIntBits(boxHeight) : 0);
         result = 31 * result + (speedDeltaTop != +0.0f ? Float.floatToIntBits(speedDeltaTop) : 0);
         result = 31 * result + (speedDeltaSides != +0.0f ? Float.floatToIntBits(speedDeltaSides) : 0);
@@ -166,6 +216,9 @@ public final class WorldSettings {
         result = 31 * result + (barrierWidth != +0.0f ? Float.floatToIntBits(barrierWidth) : 0);
         result = 31 * result + (holePosY != +0.0f ? Float.floatToIntBits(holePosY) : 0);
         result = 31 * result + (holeHeight != +0.0f ? Float.floatToIntBits(holeHeight) : 0);
+        result = 31 * result + fps;
+        result = 31 * result + length;
+        result = 31 * result + seed;
         result = 31 * result + (speedLoss != +0.0f ? Float.floatToIntBits(speedLoss) : 0);
         result = 31 * result + (particleRadius != +0.0f ? Float.floatToIntBits(particleRadius) : 0);
         result = 31 * result + (g != +0.0f ? Float.floatToIntBits(g) : 0);
@@ -177,6 +230,9 @@ public final class WorldSettings {
     }
 
     public static class Builder {
+        private int particleCountLeft;
+        private int particleCountRight;
+        private float initialSpeed;
         private float boxWidth;
         private float boxHeight;
         private float speedDeltaTop;
@@ -189,6 +245,22 @@ public final class WorldSettings {
         private float speedLoss;
         private float particleRadius;
         private float g;
+        private int fps;
+        private int length;
+        private int seed;
+
+        public Builder setParticleCount(final int left, final int right) {
+            particleCountLeft = left;
+            particleCountRight = right;
+
+            return this;
+        }
+
+        public Builder setInitialSpeed(final float speed) {
+            initialSpeed = speed;
+
+            return this;
+        }
 
         public Builder setBoxSize(final float width, final float height) {
             boxWidth = width;
@@ -235,6 +307,36 @@ public final class WorldSettings {
             this.g = g;
 
             return this;
+        }
+
+        public Builder setFps(final int fps) {
+            this.fps = fps;
+
+            return this;
+        }
+
+        public Builder setLength(final int minutes) {
+            length = minutes;
+
+            return this;
+        }
+
+        public Builder setSeed(final int seed) {
+            this.seed = seed;
+
+            return this;
+        }
+
+        public int getParticleCountLeft() {
+            return particleCountLeft;
+        }
+
+        public int getParticleCountRight() {
+            return particleCountRight;
+        }
+
+        public float getInitialSpeed() {
+            return initialSpeed;
         }
 
         public float getBoxWidth() {
@@ -285,8 +387,20 @@ public final class WorldSettings {
             return g;
         }
 
-        public WorldSettings build() {
-            return new WorldSettings(this);
+        public int getFps() {
+            return fps;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public int getSeed() {
+            return seed;
+        }
+
+        public ExperimentSettings build() {
+            return new ExperimentSettings(this);
         }
     }
 }
