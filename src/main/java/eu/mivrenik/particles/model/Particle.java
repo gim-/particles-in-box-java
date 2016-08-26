@@ -21,9 +21,9 @@
  */
 package eu.mivrenik.particles.model;
 
-import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
-public class Particle implements Serializable {
+public class Particle {
     private static final long serialVersionUID = -957990242199617646L;
 
     private double posX;
@@ -52,6 +52,19 @@ public class Particle implements Serializable {
         this.velocityY = source.getVelocityY();
     }
 
+    Particle move(final long deltaTime, final double g) {
+        double deltaTimeSec = TimeUnit.MICROSECONDS.toSeconds(deltaTime);
+
+        double newX = this.getPosX() + this.getVelocityX() * deltaTimeSec;
+        double newY = this.getPosY() + this.getVelocityY() * deltaTimeSec - g * deltaTimeSec * deltaTimeSec / 2;
+        double newVx = this.getVelocityX();
+        double newVy = this.getVelocityY() - g * deltaTimeSec;
+
+        this.setPosition(newX, newY);
+        this.setVelocity(newVx, newVy);
+        return this;
+    }
+
     public double getPosX() {
         return posX;
     }
@@ -76,7 +89,7 @@ public class Particle implements Serializable {
         return new Builder();
     }
 
-    public Particle move(final double x, final double y) {
+    public Particle setPosition(final double x, final double y) {
         posX = x;
         posY = y;
 
@@ -218,5 +231,3 @@ public class Particle implements Serializable {
         }
     }
 }
-
-

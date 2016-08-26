@@ -27,18 +27,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-
 import java.util.Random;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class ParticleTest {
     private class ParticleGenerator {
@@ -132,7 +123,7 @@ public class ParticleTest {
         double newX = generateDouble(-10, 10);
         double newY = generateDouble(-10, 10);
 
-        particle.move(newX, newY);
+        particle.setPosition(newX, newY);
         assertEquals(newX, particle.getPosX(), eps);
         assertEquals(newY, particle.getPosY(), eps);
     }
@@ -241,25 +232,5 @@ public class ParticleTest {
         Particle particle = particleGenerator.nextParticle();
 
         assertTrue(particle.overlaps(particle, particleR));
-    }
-
-    @Test
-    public void serializationReadAndWriteCheck() throws Exception {
-        Particle particle = particleGenerator.nextParticle();
-        int sourceId = particle.getId();
-
-        File tempFile = testFolder.newFile("test.txt");
-        FileOutputStream out = new FileOutputStream(tempFile);
-        FileInputStream in = new FileInputStream(tempFile);
-        ObjectOutputStream outObj = new ObjectOutputStream(out);
-        ObjectInputStream inObj = new ObjectInputStream(in);
-
-        outObj.writeObject(particle);
-        outObj.close();
-        Particle readedParticle = (Particle)inObj.readObject();
-        inObj.close();
-
-        assertTrue(particle.equals(readedParticle));
-        assertEquals(sourceId, readedParticle.getId());
     }
 }

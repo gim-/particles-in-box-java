@@ -22,11 +22,9 @@
 
 package eu.mivrenik.particles.model;
 
-import java.util.Set;
-
 public class ExperimentState {
     private final ExperimentSettings settings;
-    private final Set<Particle> particles;
+    private final Particle[] particles;
     private long time; // microseconds since the beginning of experiment
 
     ExperimentState(final Builder builder) {
@@ -39,7 +37,7 @@ public class ExperimentState {
         return settings;
     }
 
-    public Set<Particle> getParticles() {
+    public Particle[] getParticles() {
         return particles;
     }
 
@@ -68,16 +66,16 @@ public class ExperimentState {
         return result;
     }
 
-    Builder newBuilder() {
+    public static Builder newBuilder() {
         return new Builder();
     }
 
-    class Builder {
+    public static class Builder {
         private ExperimentSettings settings;
-        private Set<Particle> particles;
+        private Particle[] particles;
         private long time;
 
-        Builder setParticles(final Set<Particle> particles) {
+        Builder setParticles(final Particle[] particles) {
             this.particles = particles;
 
             return this;
@@ -99,7 +97,7 @@ public class ExperimentState {
             return settings;
         }
 
-        public Set<Particle> getParticles() {
+        public Particle[] getParticles() {
             return particles;
         }
 
