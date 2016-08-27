@@ -78,24 +78,24 @@ public final class ExperimentSettings {
     private final float g;
 
     private ExperimentSettings(final Builder builder) {
-        particleCountLeft = builder.getParticleCountLeft();
-        particleCountRight = builder.getParticleCountRight();
-        initialSpeed = builder.getInitialSpeed();
-        boxWidth = builder.getBoxWidth();
-        boxHeight = builder.getBoxHeight();
-        speedDeltaTop = builder.getSpeedDeltaTop();
-        speedDeltaSides = builder.getSpeedDeltaSides();
-        speedDeltaBottom = builder.getSpeedDeltaBottom();
-        barrierPosX = builder.getBarrierPosX();
-        barrierWidth = builder.getBarrierWidth();
-        holePosY = builder.getHolePosY();
-        holeHeight = builder.getHoleHeight();
-        speedLoss = builder.getSpeedLoss();
-        particleRadius = builder.getParticleRadius();
-        g = builder.getG();
-        fps = builder.getFps();
-        length = builder.getLength();
-        seed = builder.getSeed();
+        particleCountLeft = builder.particleCountLeft;
+        particleCountRight = builder.particleCountRight;
+        initialSpeed = builder.initialSpeed;
+        boxWidth = builder.boxWidth;
+        boxHeight = builder.boxHeight;
+        speedDeltaTop = builder.speedDeltaTop;
+        speedDeltaSides = builder.speedDeltaSides;
+        speedDeltaBottom = builder.speedDeltaBottom;
+        barrierPosX = builder.barrierPosX;
+        barrierWidth = builder.barrierWidth;
+        holePosY = builder.holePosY;
+        holeHeight = builder.holeHeight;
+        speedLoss = builder.speedLoss;
+        particleRadius = builder.particleRadius;
+        g = builder.g;
+        fps = builder.fps;
+        length = builder.length;
+        seed = builder.seed;
     }
 
     public int getParticleCountLeft() {
@@ -325,78 +325,6 @@ public final class ExperimentSettings {
             this.seed = seed;
 
             return this;
-        }
-
-        public int getParticleCountLeft() {
-            return particleCountLeft;
-        }
-
-        public int getParticleCountRight() {
-            return particleCountRight;
-        }
-
-        public float getInitialSpeed() {
-            return initialSpeed;
-        }
-
-        public float getBoxWidth() {
-            return boxWidth;
-        }
-
-        public float getBoxHeight() {
-            return boxHeight;
-        }
-
-        public float getSpeedDeltaTop() {
-            return speedDeltaTop;
-        }
-
-        public float getSpeedDeltaSides() {
-            return speedDeltaSides;
-        }
-
-        public float getSpeedDeltaBottom() {
-            return speedDeltaBottom;
-        }
-
-        public float getBarrierPosX() {
-            return barrierPosX;
-        }
-
-        public float getBarrierWidth() {
-            return barrierWidth;
-        }
-
-        public float getHolePosY() {
-            return holePosY;
-        }
-
-        public float getHoleHeight() {
-            return holeHeight;
-        }
-
-        public float getSpeedLoss() {
-            return speedLoss;
-        }
-
-        public float getParticleRadius() {
-            return particleRadius;
-        }
-
-        public float getG() {
-            return g;
-        }
-
-        public int getFps() {
-            return fps;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public int getSeed() {
-            return seed;
         }
 
         public ExperimentSettings build() {
