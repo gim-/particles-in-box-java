@@ -110,7 +110,7 @@ public final class ExperimentSettings {
         return particleCountLeft + particleCountRight;
     }
 
-    public double getInitialSpeed() {
+    public float getInitialSpeed() {
         return initialSpeed;
     }
 

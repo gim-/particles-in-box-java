@@ -2,6 +2,7 @@ package eu.mivrenik.particles.model;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Simulator {
     private ExperimentSettings experimentSettings;
@@ -15,78 +16,113 @@ public class Simulator {
         return random.nextDouble() * (upperBound - lowerBound) + lowerBound;
     }
 
-    public ExperimentState initialDistribution() {
+    public ExperimentSettings getSettings() {
+        return experimentSettings;
+    }
+
+    public ExperimentState initialDistribution() throws Exception {
         ExperimentState.Builder experimentStateBuilder = ExperimentState.newBuilder();
         Particle.Builder particleBuilder = new Particle.Builder();
         int particlesNum = experimentSettings.getParticleCountLeft() + experimentSettings.getParticleCountRight();
         Particle[] particles = new Particle[particlesNum];
+        int counterCup = 20000000;
+
+        double leftXLowerBound = 0 + experimentSettings.getParticleRadius();
+        double leftXUpperBound = experimentSettings.getBarrierPosX() - experimentSettings.getBarrierWidth() / 2
+                - experimentSettings.getParticleRadius();
+        double rightXLowerBound = experimentSettings.getBarrierPosX() + experimentSettings.getBarrierWidth() / 2
+                + experimentSettings.getParticleRadius();
+        double rightXUpperBound = experimentSettings.getBoxWidth() - experimentSettings.getParticleRadius();
+        double lowerYBound = 0 + experimentSettings.getParticleRadius();
+        double upperYBound = experimentSettings.getBoxHeight() - experimentSettings.getParticleRadius();
+
         double angle;
         boolean bTouching;
         double currX;
         double currY;
-        double currVx;
-        double currVy;
+        double currVx = 0;
+        double currVy = 0;
+        Particle particle;
+        particleBuilder.setVelocity(currVx, currVy).setId(0);
 
         // left part
         for (int i = 0; i < experimentSettings.getParticleCountLeft(); i++) {
+            int counter = 0;
             do {
                 bTouching = false;
 
-                currX = generateDouble(0 + experimentSettings.getParticleRadius(),
-                                       experimentSettings.getBarrierPosX() - experimentSettings.getBarrierWidth() / 2
-                                                                           - experimentSettings.getParticleRadius());
-                currY = generateDouble(0 + experimentSettings.getParticleRadius(),
-                                       experimentSettings.getBoxHeight() - experimentSettings.getParticleRadius());
+                currX = generateDouble(leftXLowerBound, leftXUpperBound);
+                currY = generateDouble(lowerYBound, upperYBound);
+                particle = particleBuilder.setPosition(currX, currY).setId(2 * i).build();
 
                 for (int j = 0; j < i; j++) {
-                    if (particles[i].overlaps(particles[j], experimentSettings.getParticleRadius())) {
+                    if (particles[j].overlaps(particle, experimentSettings.getParticleRadius())) {
                         bTouching = true;
                         break;
                     }
+                }
+                counter++;
+                if (counter > counterCup) {
+                    throw new Exception("Infinite loop");
                 }
             } while (bTouching);
 
             angle = generateDouble(0, Math.PI * 2);
             currVx = experimentSettings.getInitialSpeed() * Math.cos(angle);
             currVy = experimentSettings.getInitialSpeed() * Math.sin(angle);
+            particle.setVelocity(currVx, currVy);
 
-            particleBuilder.setPosition(currX, currY)
-                    .setVelocity(currVx, currVy)
-                    .setId(2 * i);
-            particles[i] = particleBuilder.build();
+            particles[i] = particle;
         }
 
         // right part
-        for (int i = experimentSettings.getParticleCountLeft(); i < particlesNum; i++) {
+        for (int i = 0; i < experimentSettings.getParticleCountRight(); i++) {
+
             do {
+                int counter = 0;
                 bTouching = false;
 
-                currX = generateDouble(experimentSettings.getBarrierPosX() + experimentSettings.getBarrierWidth() / 2
-                                                                           + experimentSettings.getParticleRadius(),
-                                       0 + experimentSettings.getBoxWidth());
-                currY = generateDouble(0 + experimentSettings.getParticleRadius(),
-                                       experimentSettings.getBoxHeight() - experimentSettings.getParticleRadius());
+                currX = generateDouble(rightXLowerBound, rightXUpperBound);
+                currY = generateDouble(lowerYBound, upperYBound);
+                particle = particleBuilder.setPosition(currX, currY).setId(2 * i + 1).build();
 
-                for (int j = experimentSettings.getParticleCountLeft(); j < i; j++) {
-                    if (particles[i].overlaps(particles[j], experimentSettings.getParticleRadius())) {
+                for (int j = 0; j < i; j++) {
+                    if (particles[experimentSettings.getParticleCountLeft() + j]
+                            .overlaps(particle, experimentSettings.getParticleRadius())) {
                         bTouching = true;
                         break;
                     }
+                }
+                counter++;
+                if (counter > counterCup) {
+                    throw new Exception("Infinite loop");
                 }
             } while (bTouching);
 
             angle = generateDouble(0, Math.PI * 2);
             currVx = experimentSettings.getInitialSpeed() * Math.cos(angle);
             currVy = experimentSettings.getInitialSpeed() * Math.sin(angle);
+            particle.setVelocity(currVx, currVy);
 
-            particleBuilder.setPosition(currX, currY)
-                           .setVelocity(currVx, currVy)
-                           .setId(2 * i + 1);
-            particles[i] = particleBuilder.build();
+            particles[experimentSettings.getParticleCountLeft() + i] = particle;
         }
 
         return experimentStateBuilder.setParticles(particles).setSettings(experimentSettings).setTime(0).build();
+    }
 
+    public static long calculateTimeStep(final ExperimentState experimentState) {
+        double speedMax = 0;
+        double distanceMax = experimentState.getSettings().getParticleRadius() / 8;
+
+        for (Particle particle : experimentState.getParticles()) {
+            speedMax = Math.max(particle.getSpeed(), speedMax);
+        }
+
+        if (speedMax == 0) {
+            speedMax = experimentState.getSettings().getInitialSpeed();
+        }
+
+        return TimeUnit.SECONDS.toMicros((int) Math.ceil(distanceMax / speedMax));
     }
 
     public ExperimentState nextTimeStep(final ExperimentState experimentState, final long deltaTime) {
@@ -123,14 +159,14 @@ public class Simulator {
         double boxTopParticleBound = boxTopBound - particleRadius;
         double boxBottomParticleBound = boxBottomBound + particleRadius;
 
-        double holeLeftSideBound = experimentSettings.getBarrierPosX() - experimentSettings.getBoxWidth() / 2;
-        double holeRightSideBound = experimentSettings.getBarrierPosX() + experimentSettings.getBoxWidth() / 2;
+        double holeLeftSideBound = experimentSettings.getBarrierPosX() - experimentSettings.getBarrierWidth() / 2;
+        double holeRightSideBound = experimentSettings.getBarrierPosX() + experimentSettings.getBarrierWidth() / 2;
         double holeTopBound = experimentSettings.getHolePosY() + experimentSettings.getHoleHeight() / 2;
         double holeBottomBound = experimentSettings.getHolePosY() - experimentSettings.getHoleHeight() / 2;
         double holeLeftSideParticleBound = holeLeftSideBound - particleRadius;
-        double holeRightSideParticleBound = holeRightSideBound - particleRadius;
+        double holeRightSideParticleBound = holeRightSideBound + particleRadius;
         double holeTopParticleBound = holeTopBound - particleRadius;
-        double holeBottomParticleBound = holeBottomBound - particleRadius;
+        double holeBottomParticleBound = holeBottomBound + particleRadius;
 
         // move particles
         for (int i = 0; i < particles.length; i++) {
@@ -139,7 +175,7 @@ public class Simulator {
 
         // particle's collision
         Arrays.sort(movedParticles,
-                   (p1, p2) -> p1.getPosY() < p2.getPosY() ? -1 : p1.getPosY() > p2.getPosY() ? 1 : 0);
+                (p1, p2) -> { return (int) Math.signum(p1.getPosY() - p2.getPosY()); });
 
         for (int i = 0; i < particlesNum; i++) {
             for (int j = i + 1; j < particlesNum; j++) {
@@ -169,11 +205,11 @@ public class Simulator {
                         if (dY > 0) {
                             movedParticles[i] = movedParticles[i]
                                     .setPosition(movedParticles[i].getPosX() + needToMove * cos,
-                                                 movedParticles[i].getPosY() + needToMove * sin);
+                                            movedParticles[i].getPosY() + needToMove * sin);
                         } else {
                             movedParticles[j] = movedParticles[j]
                                     .setPosition(movedParticles[j].getPosX() - needToMove * cos,
-                                                 movedParticles[j].getPosY() - needToMove * sin);
+                                            movedParticles[j].getPosY() - needToMove * sin);
                         }
                     }
                 }
