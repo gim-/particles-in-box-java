@@ -25,8 +25,8 @@ public class SimulatorTest {
                 .setFps(30)
                 .setLength(1)
                 .setSeed(241)
-                .setSpeedLoss((float)0.01)
-                .setG((float)9.8)
+                .setSpeedLoss(0.01f)
+                .setG(9.8f)
                 .setParticleRadius(1);
 
 
@@ -56,8 +56,8 @@ public class SimulatorTest {
                 .setFps(30)
                 .setLength(1)
                 .setSeed(241)
-                .setSpeedLoss((float)0.01)
-                .setG((float)9.8)
+                .setSpeedLoss(0.01f)
+                .setG(9.8f)
                 .setParticleRadius(1);
 
 
@@ -80,8 +80,8 @@ public class SimulatorTest {
                 .setFps(30)
                 .setLength(1)
                 .setSeed(241)
-                .setSpeedLoss((float)0.01)
-                .setG((float)9.8)
+                .setSpeedLoss(0.01f)
+                .setG(9.8f)
                 .setParticleRadius(1);
 
 
@@ -103,8 +103,8 @@ public class SimulatorTest {
                 .setFps(30)
                 .setLength(1)
                 .setSeed(241)
-                .setSpeedLoss((float)0.01)
-                .setG((float)9.8)
+                .setSpeedLoss(0.01f)
+                .setG(9.8f)
                 .setParticleRadius(1);
 
 
@@ -133,8 +133,8 @@ public class SimulatorTest {
                 .setFps(30)
                 .setLength(1)
                 .setSeed(241)
-                .setSpeedLoss((float)0.01)
-                .setG((float)9.8)
+                .setSpeedLoss(0.01f)
+                .setG(9.8f)
                 .setParticleRadius(1);
 
 
