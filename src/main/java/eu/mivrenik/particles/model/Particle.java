@@ -24,8 +24,6 @@ package eu.mivrenik.particles.model;
 import java.util.concurrent.TimeUnit;
 
 public class Particle {
-    private static final long serialVersionUID = -957990242199617646L;
-
     private double posX;
     private double posY;
     private double velocityX;
