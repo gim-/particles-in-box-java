@@ -154,9 +154,9 @@ public class SimulatorTest {
         Particle[] afterMoving = nextState.getParticles();
 
         Arrays.sort(beforeMoving,
-                (p1, p2) -> { return (int) Math.signum(p1.getId() - p2.getId()); });
+                (p1, p2) -> { return p1.getId() - p2.getId(); });
         Arrays.sort(afterMoving,
-                (p1, p2) -> { return (int) Math.signum(p1.getId() - p2.getId()); });
+                (p1, p2) -> { return p1.getId() - p2.getId(); });
         
         for (int i = 0; i < startState.getParticles().length; i++) {
             assertEquals(true, beforeMoving[i].equals(afterMoving[i]));
