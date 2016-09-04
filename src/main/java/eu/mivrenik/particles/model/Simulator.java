@@ -22,7 +22,7 @@ public class Simulator {
 
     public ExperimentState initialDistribution() throws Exception {
         ExperimentState.Builder experimentStateBuilder = ExperimentState.newBuilder();
-        Particle.Builder particleBuilder = new Particle.Builder();
+        Particle.Builder particleBuilder = Particle.newBuilder();
         int particlesNum = experimentSettings.getParticleCountLeft() + experimentSettings.getParticleCountRight();
         Particle[] particles = new Particle[particlesNum];
         int counterCup = 20000000;
@@ -43,7 +43,7 @@ public class Simulator {
         double currVx = 0;
         double currVy = 0;
         Particle particle;
-        particleBuilder.setVelocity(currVx, currVy).setId(0);
+        particleBuilder.velocity(currVx, currVy).id(0);
 
         // left part
         for (int i = 0; i < experimentSettings.getParticleCountLeft(); i++) {
@@ -53,7 +53,7 @@ public class Simulator {
 
                 currX = generateDouble(leftXLowerBound, leftXUpperBound);
                 currY = generateDouble(lowerYBound, upperYBound);
-                particle = particleBuilder.setPosition(currX, currY).setId(2 * i).build();
+                particle = particleBuilder.position(currX, currY).id(2 * i).build();
 
                 for (int j = 0; j < i; j++) {
                     if (particles[j].overlaps(particle, experimentSettings.getParticleRadius())) {
@@ -84,7 +84,7 @@ public class Simulator {
 
                 currX = generateDouble(rightXLowerBound, rightXUpperBound);
                 currY = generateDouble(lowerYBound, upperYBound);
-                particle = particleBuilder.setPosition(currX, currY).setId(2 * i + 1).build();
+                particle = particleBuilder.position(currX, currY).id(2 * i + 1).build();
 
                 for (int j = 0; j < i; j++) {
                     if (particles[experimentSettings.getParticleCountLeft() + j]
@@ -107,7 +107,7 @@ public class Simulator {
             particles[experimentSettings.getParticleCountLeft() + i] = particle;
         }
 
-        return experimentStateBuilder.setParticles(particles).setSettings(experimentSettings).setTime(0).build();
+        return experimentStateBuilder.particles(particles).settings(experimentSettings).time(0).build();
     }
 
     public static long calculateTimeStep(final ExperimentState experimentState) {
@@ -270,9 +270,9 @@ public class Simulator {
         }
 
         return experimentStateBuilder
-                .setParticles(movedParticles)
-                .setSettings(experimentSettings)
-                .setTime(experimentState.getTime() + deltaTime)
+                .particles(movedParticles)
+                .settings(experimentSettings)
+                .time(experimentState.getTime() + deltaTime)
                 .build();
     }
 }

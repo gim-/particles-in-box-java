@@ -17,8 +17,10 @@ public class SimulationWriter {
     public void saveSimulation() throws Exception {
         ExperimentState currState = simulator.initialDistribution();
         ExperimentSettings experimentSettings = simulator.getSettings();
-        long duration = TimeUnit.MINUTES.toMicros(experimentSettings.getLength());
-        long deltaTime = 1 / experimentSettings.getLength();
+
+        long duration = TimeUnit.MINUTES.toMicros(experimentSettings.getDuration());
+        long deltaTime = 1 / experimentSettings.getDuration();
+
         long currSnap = 0;
 
         try {
@@ -40,7 +42,7 @@ public class SimulationWriter {
             out.writeFloat(experimentSettings.getHoleHeight());
             out.writeFloat(experimentSettings.getParticleRadius());
             out.writeInt(experimentSettings.getFps());
-            out.writeInt(experimentSettings.getLength());
+            out.writeInt(experimentSettings.getDuration());
             out.writeInt(experimentSettings.getSeed());
 
             while (currState.getTime() < duration) {

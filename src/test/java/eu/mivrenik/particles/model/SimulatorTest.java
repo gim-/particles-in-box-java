@@ -16,19 +16,18 @@ public class SimulatorTest {
     @Test
     public void initialDistribution() throws Exception {
         ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
-        builder.setParticleCount(100, 100)
-                .setInitialSpeed(1)
-                .setBoxSize(500, 500)
-                .setSpeedDelta(1, 1, 1)
-                .setBarrier(10, 2)
-                .setHole(10, 2)
-                .setFps(30)
-                .setLength(1)
-                .setSeed(241)
-                .setSpeedLoss(0.01f)
-                .setG(9.8f)
-                .setParticleRadius(1);
-
+        builder.particleCount(100, 100)
+                .initialSpeed(1)
+                .boxSize(500, 500)
+                .speedDelta(1, 1, 1)
+                .barrier(10, 2)
+                .hole(10, 2)
+                .fps(30)
+                .duration(1)
+                .seed(241)
+                .speedLoss(0.01f)
+                .g(9.8f)
+                .particleRadius(1);
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -47,19 +46,18 @@ public class SimulatorTest {
     @Test
     public void initialDistributionWithoutParticles() throws Exception {
         ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
-        builder.setParticleCount(0, 0)
-                .setInitialSpeed(1)
-                .setBoxSize(500, 500)
-                .setSpeedDelta(1, 1, 1)
-                .setBarrier(10, 2)
-                .setHole(10, 2)
-                .setFps(30)
-                .setLength(1)
-                .setSeed(241)
-                .setSpeedLoss(0.01f)
-                .setG(9.8f)
-                .setParticleRadius(1);
-
+        builder.particleCount(0, 0)
+                .initialSpeed(1)
+                .boxSize(500, 500)
+                .speedDelta(1, 1, 1)
+                .barrier(10, 2)
+                .hole(10, 2)
+                .fps(30)
+                .duration(1)
+                .seed(241)
+                .speedLoss(0.01f)
+                .g(9.8f)
+                .particleRadius(1);
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -71,19 +69,18 @@ public class SimulatorTest {
     @Test
     public void initialDistributionException() throws Exception {
         ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
-        builder.setParticleCount(500, 500)
-                .setInitialSpeed(1)
-                .setBoxSize(50, 50)
-                .setSpeedDelta(1, 1, 1)
-                .setBarrier(10, 2)
-                .setHole(10, 2)
-                .setFps(30)
-                .setLength(1)
-                .setSeed(241)
-                .setSpeedLoss(0.01f)
-                .setG(9.8f)
-                .setParticleRadius(1);
-
+        builder.particleCount(500, 500)
+                .initialSpeed(1)
+                .boxSize(50, 50)
+                .speedDelta(1, 1, 1)
+                .barrier(10, 2)
+                .hole(10, 2)
+                .fps(30)
+                .duration(1)
+                .seed(241)
+                .speedLoss(0.01f)
+                .g(9.8f)
+                .particleRadius(1);
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -94,19 +91,18 @@ public class SimulatorTest {
     @Test
     public void nextTimeStep() throws Exception {
         ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
-        builder.setParticleCount(100, 100)
-                .setInitialSpeed(1)
-                .setBoxSize(500, 500)
-                .setSpeedDelta(1, 1, 1)
-                .setBarrier(10, 2)
-                .setHole(10, 2)
-                .setFps(30)
-                .setLength(1)
-                .setSeed(241)
-                .setSpeedLoss(0.01f)
-                .setG(9.8f)
-                .setParticleRadius(1);
-
+        builder.particleCount(100, 100)
+                .initialSpeed(1)
+                .boxSize(500, 500)
+                .speedDelta(1, 1, 1)
+                .barrier(10, 2)
+                .hole(10, 2)
+                .fps(30)
+                .duration(1)
+                .seed(241)
+                .speedLoss(0.01f)
+                .g(9.8f)
+                .particleRadius(1);
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -124,19 +120,18 @@ public class SimulatorTest {
     @Test
     public void nextTimeStepWithoutMoving() throws Exception {
         ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
-        builder.setParticleCount(100, 100)
-                .setInitialSpeed(1)
-                .setBoxSize(500, 500)
-                .setSpeedDelta(1, 1, 1)
-                .setBarrier(10, 2)
-                .setHole(10, 2)
-                .setFps(30)
-                .setLength(1)
-                .setSeed(241)
-                .setSpeedLoss(0.01f)
-                .setG(9.8f)
-                .setParticleRadius(1);
-
+        builder.particleCount(100, 100)
+                .initialSpeed(1)
+                .boxSize(500, 500)
+                .speedDelta(1, 1, 1)
+                .barrier(10, 2)
+                .hole(10, 2)
+                .fps(30)
+                .duration(1)
+                .seed(241)
+                .speedLoss(0.01f)
+                .g(9.8f)
+                .particleRadius(1);
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);

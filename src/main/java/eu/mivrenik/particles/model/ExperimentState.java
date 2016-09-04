@@ -22,15 +22,15 @@
 
 package eu.mivrenik.particles.model;
 
-public class ExperimentState {
+public final class ExperimentState {
     private final ExperimentSettings settings;
     private final Particle[] particles;
     private long time; // microseconds since the beginning of experiment
 
-    ExperimentState(final Builder builder) {
-        settings = builder.getSettings();
-        particles = builder.getParticles();
-        time = builder.getTime();
+    private ExperimentState(final Builder builder) {
+        settings = builder.settings;
+        particles = builder.particles;
+        time = builder.time;
     }
 
     public ExperimentSettings getSettings() {
@@ -75,37 +75,25 @@ public class ExperimentState {
         private Particle[] particles;
         private long time;
 
-        Builder setParticles(final Particle[] particles) {
+        public Builder particles(final Particle[] particles) {
             this.particles = particles;
 
             return this;
         }
 
-        Builder setSettings(final ExperimentSettings settings) {
+        public Builder settings(final ExperimentSettings settings) {
             this.settings = settings;
 
             return this;
         }
 
-        Builder setTime(final long microseconds) {
+        public Builder time(final long microseconds) {
             time = microseconds;
 
             return this;
         }
 
-        public ExperimentSettings getSettings() {
-            return settings;
-        }
-
-        public Particle[] getParticles() {
-            return particles;
-        }
-
-        public long getTime() {
-            return time;
-        }
-
-        ExperimentState build() {
+        public ExperimentState build() {
             return new ExperimentState(this);
         }
     }
