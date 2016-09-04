@@ -239,11 +239,11 @@
     styleClass="option-title" />
   <Spinner styleClass="option-input" fx:id="duration">
     <valueFactory>
-      <SpinnerValueFactory.DoubleSpinnerValueFactory
-        min="0.01"
+      <SpinnerValueFactory.IntegerSpinnerValueFactory
+        min="1"
         max="100"
-        initialValue="10.0"
-        amountToStepBy="0.01" />
+        initialValue="1"
+        amountToStepBy="1" />
     </valueFactory>
   </Spinner>
   <Label
@@ -279,11 +279,11 @@
     MigPane.cc="wrap"
     styleClass="option-input">
     <valueFactory>
-      <SpinnerValueFactory.DoubleSpinnerValueFactory
-        min="0.01"
+      <SpinnerValueFactory.IntegerSpinnerValueFactory
+        min="5"
         max="100"
-        initialValue="10.0"
-        amountToStepBy="0.01" />
+        initialValue="30"
+        amountToStepBy="1" />
     </valueFactory>
   </Spinner>
 
