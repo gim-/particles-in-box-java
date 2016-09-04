@@ -64,7 +64,7 @@ public final class ExperimentSettings {
     private final float holePosY;
     private final float holeHeight;
     private final int fps;
-    private final int length;
+    private final int duration;
     private final int seed;
 
     /**
@@ -94,7 +94,7 @@ public final class ExperimentSettings {
         particleRadius = builder.particleRadius;
         g = builder.g;
         fps = builder.fps;
-        length = builder.length;
+        duration = builder.duration;
         seed = builder.seed;
     }
 
@@ -166,8 +166,8 @@ public final class ExperimentSettings {
         return fps;
     }
 
-    public int getLength() {
-        return length;
+    public int getDuration() {
+        return duration;
     }
 
     public int getSeed() {
@@ -194,7 +194,7 @@ public final class ExperimentSettings {
         if (Float.compare(that.holePosY, holePosY) != 0) return false;
         if (Float.compare(that.holeHeight, holeHeight) != 0) return false;
         if (fps != that.fps) return false;
-        if (length != that.length) return false;
+        if (duration != that.duration) return false;
         if (seed != that.seed) return false;
         if (Float.compare(that.speedLoss, speedLoss) != 0) return false;
         if (Float.compare(that.particleRadius, particleRadius) != 0) return false;
@@ -217,7 +217,7 @@ public final class ExperimentSettings {
         result = 31 * result + (holePosY != +0.0f ? Float.floatToIntBits(holePosY) : 0);
         result = 31 * result + (holeHeight != +0.0f ? Float.floatToIntBits(holeHeight) : 0);
         result = 31 * result + fps;
-        result = 31 * result + length;
+        result = 31 * result + duration;
         result = 31 * result + seed;
         result = 31 * result + (speedLoss != +0.0f ? Float.floatToIntBits(speedLoss) : 0);
         result = 31 * result + (particleRadius != +0.0f ? Float.floatToIntBits(particleRadius) : 0);
@@ -246,30 +246,30 @@ public final class ExperimentSettings {
         private float particleRadius;
         private float g;
         private int fps;
-        private int length;
+        private int duration;
         private int seed;
 
-        public Builder setParticleCount(final int left, final int right) {
+        public Builder particleCount(final int left, final int right) {
             particleCountLeft = left;
             particleCountRight = right;
 
             return this;
         }
 
-        public Builder setInitialSpeed(final float speed) {
+        public Builder initialSpeed(final float speed) {
             initialSpeed = speed;
 
             return this;
         }
 
-        public Builder setBoxSize(final float width, final float height) {
+        public Builder boxSize(final float width, final float height) {
             boxWidth = width;
             boxHeight = height;
 
             return this;
         }
 
-        public Builder setSpeedDelta(final float top, final float sides, final float bottom) {
+        public Builder speedDelta(final float top, final float sides, final float bottom) {
             speedDeltaTop = top;
             speedDeltaSides = sides;
             speedDeltaBottom = bottom;
@@ -277,51 +277,51 @@ public final class ExperimentSettings {
             return this;
         }
 
-        public Builder setBarrier(final float posX, final float width) {
+        public Builder barrier(final float posX, final float width) {
             barrierPosX = posX;
             barrierWidth = width;
 
             return this;
         }
 
-        public Builder setHole(final float posY, final float height) {
+        public Builder hole(final float posY, final float height) {
             holePosY = posY;
             holeHeight = height;
 
             return this;
         }
 
-        public Builder setSpeedLoss(final float speedLoss) {
+        public Builder speedLoss(final float speedLoss) {
             this.speedLoss = speedLoss;
 
             return this;
         }
 
-        public Builder setParticleRadius(final float particleRadius) {
+        public Builder particleRadius(final float particleRadius) {
             this.particleRadius = particleRadius;
 
             return this;
         }
 
-        public Builder setG(final float g) {
+        public Builder g(final float g) {
             this.g = g;
 
             return this;
         }
 
-        public Builder setFps(final int fps) {
+        public Builder fps(final int fps) {
             this.fps = fps;
 
             return this;
         }
 
-        public Builder setLength(final int minutes) {
-            length = minutes;
+        public Builder duration(final int minutes) {
+            duration = minutes;
 
             return this;
         }
 
-        public Builder setSeed(final int seed) {
+        public Builder seed(final int seed) {
             this.seed = seed;
 
             return this;

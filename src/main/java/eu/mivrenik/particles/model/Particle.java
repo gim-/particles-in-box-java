@@ -30,24 +30,20 @@ public class Particle {
     private double velocityY;
     private int id;
 
-    public Particle(final int id,
-                    final double posX,
-                    final double posY,
-                    final double velocityX,
-                    final double velocityY) {
-        this.id = id;
-        this.posX = posX;
-        this.posY = posY;
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+    private Particle(final Builder builder) {
+        this.id = builder.id;
+        this.posX = builder.posX;
+        this.posY = builder.posY;
+        this.velocityX = builder.velocityX;
+        this.velocityY = builder.velocityY;
     }
 
     public Particle(final Particle source) {
-        this.id = source.getId();
-        this.posX = source.getPosX();
-        this.posY = source.getPosY();
-        this.velocityX = source.getVelocityX();
-        this.velocityY = source.getVelocityY();
+        this.id = source.id;
+        this.posX = source.posX;
+        this.posY = source.posY;
+        this.velocityX = source.velocityX;
+        this.velocityY = source.velocityY;
     }
 
     Particle move(final long deltaTime, final double g) {
@@ -184,48 +180,28 @@ public class Particle {
         private double velocityY;
         private int id;
 
-        public Builder setId(final int id) {
+        public Builder id(final int id) {
             this.id = id;
 
             return this;
         }
 
-        public Builder setPosition(final double posX, final double posY) {
+        public Builder position(final double posX, final double posY) {
             this.posX = posX;
             this.posY = posY;
 
             return this;
         }
 
-        public Builder setVelocity(final double velocityX, final double velocityY) {
+        public Builder velocity(final double velocityX, final double velocityY) {
             this.velocityX = velocityX;
             this.velocityY = velocityY;
 
             return this;
         }
 
-        public double getPosX() {
-            return posX;
-        }
-
-        public double getPosY() {
-            return posY;
-        }
-
-        public double getVelocityX() {
-            return velocityX;
-        }
-
-        public double getVelocityY() {
-            return velocityY;
-        }
-
-        public double getId() {
-            return id;
-        }
-
         public Particle build() {
-            return new Particle(id, posX, posY, velocityX, velocityY);
+            return new Particle(this);
         }
     }
 }

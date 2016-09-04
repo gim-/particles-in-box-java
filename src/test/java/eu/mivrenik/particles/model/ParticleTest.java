@@ -68,14 +68,22 @@ public class ParticleTest {
                     y = generateDouble(lowerBoundCoordinate, upperBoundCoordinate),
                     vX = generateDouble(lowerBoundVelocity, upperBoundVelocity),
                     vY = generateDouble(lowerBoundVelocity, upperBoundVelocity);
-            return new Particle(id, x, y, vX, vY);
+            return Particle.newBuilder()
+                    .id(id)
+                    .position(x, y)
+                    .velocity(vX, vY)
+                    .build();
         }
 
         Particle nextParticleSpecifiedCoordinates(double x, double y) {
             int id = rand.nextInt(upperBoundId);
             double vX = generateDouble(lowerBoundVelocity, upperBoundVelocity),
                     vY = generateDouble(lowerBoundVelocity, upperBoundVelocity);
-            return new Particle(id, x, y, vX, vY);
+            return Particle.newBuilder()
+                    .id(id)
+                    .position(x, y)
+                    .velocity(vX, vY)
+                    .build();
         }
     }
 
@@ -110,8 +118,16 @@ public class ParticleTest {
 
     @Test
     public void particlesWithDifferentIdAreNotEqual() throws Exception {
-        Particle p1 = new Particle(1, 0.0, 0.0, 0.0, 0.0);
-        Particle p2 = new Particle(2, 0.0, 0.0, 0.0, 0.0);
+        Particle p1 = Particle.newBuilder()
+                .id(1)
+                .position(0.0, 0.0)
+                .velocity(0.0, 0.0)
+                .build();
+        Particle p2 = Particle.newBuilder()
+                .id(2)
+                .position(0.0, 0.0)
+                .velocity(0.0, 0.0)
+                .build();
 
         assertNotEquals(p1, p2);
     }
