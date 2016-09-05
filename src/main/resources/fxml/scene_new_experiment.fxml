@@ -31,7 +31,7 @@
   <Label
     text="Count (left side)"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="particleCountLeft">
+  <Spinner styleClass="option-input" fx:id="particleCountLeft" editable="true" >
     <valueFactory>
       <SpinnerValueFactory.IntegerSpinnerValueFactory
         min="1"
@@ -43,7 +43,7 @@
   <Label
     text="Top"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedDeltaTop">
+  <Spinner styleClass="option-input" fx:id="speedDeltaTop" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -57,6 +57,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="boxWidth"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
@@ -73,7 +74,7 @@
   <Label
     text="Count (right side)"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="particleCountRight">
+  <Spinner styleClass="option-input" fx:id="particleCountRight" editable="true">
     <valueFactory>
       <SpinnerValueFactory.IntegerSpinnerValueFactory
         min="1"
@@ -85,7 +86,7 @@
   <Label
     text="Bottom"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedDeltaBottom">
+  <Spinner styleClass="option-input" fx:id="speedDeltaBottom" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -99,6 +100,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="boxHeight"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
@@ -115,7 +117,7 @@
   <Label
     text="Radius"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="particleRadius">
+  <Spinner styleClass="option-input" fx:id="particleRadius" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -127,7 +129,7 @@
   <Label
     text="Sides"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedDeltaSides">
+  <Spinner styleClass="option-input" fx:id="speedDeltaSides" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -141,6 +143,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="barrierPosX"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
@@ -157,7 +160,7 @@
   <Label
     text="Initial speed"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="initialSpeed">
+  <Spinner styleClass="option-input" fx:id="initialSpeed" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -175,6 +178,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="barrierWidth"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
@@ -191,7 +195,7 @@
   <Label
     text="Speed loss factor"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedLoss">
+  <Spinner styleClass="option-input" fx:id="speedLoss" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -203,7 +207,7 @@
   <Label
     text="g"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="g">
+  <Spinner styleClass="option-input" fx:id="g" editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -217,6 +221,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="holePosY"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
@@ -237,7 +242,7 @@
   <Label
     text="Min. to simulate"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="duration">
+  <Spinner styleClass="option-input" fx:id="duration" editable="true">
     <valueFactory>
       <SpinnerValueFactory.IntegerSpinnerValueFactory
         min="1"
@@ -251,6 +256,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="holeHeight"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
@@ -275,6 +281,7 @@
     styleClass="option-title" />
   <Spinner
     fx:id="fps"
+    editable="true"
     maxWidth="80"
     MigPane.cc="wrap"
     styleClass="option-input">
