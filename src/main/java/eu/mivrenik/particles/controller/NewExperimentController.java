@@ -113,19 +113,19 @@ public class NewExperimentController {
         // TODO set seed value
         int seedVal = 255;
 
-        builder.setParticleCount(particleCountLeftVal,
+        builder.particleCount(particleCountLeftVal,
                                  particleCountRightVal);
-        builder.setInitialSpeed(initialSpeedVal);
-        builder.setSpeedLoss(speedLossVal);
-        builder.setSpeedDelta(speedDeltaTopVal, speedDeltaSidesVal, speedDeltaBottomVal);
-        builder.setG(gVal);
-        builder.setBoxSize(boxWidthVal, boxHeightVal);
-        builder.setBarrier(barrierPosXVal, barrierWidthVal);
-        builder.setHole(holePosYVal, holeHeightVal);
-        builder.setParticleRadius(particleRadiusVal);
-        builder.setFps(fpsVal);
-        builder.setLength(durationVal);
-        builder.setSeed(seedVal);
+        builder.initialSpeed(initialSpeedVal);
+        builder.speedLoss(speedLossVal);
+        builder.speedDelta(speedDeltaTopVal, speedDeltaSidesVal, speedDeltaBottomVal);
+        builder.g(gVal);
+        builder.boxSize(boxWidthVal, boxHeightVal);
+        builder.barrier(barrierPosXVal, barrierWidthVal);
+        builder.hole(holePosYVal, holeHeightVal);
+        builder.particleRadius(particleRadiusVal);
+        builder.fps(fpsVal);
+        builder.duration(durationVal);
+        builder.seed(seedVal);
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
