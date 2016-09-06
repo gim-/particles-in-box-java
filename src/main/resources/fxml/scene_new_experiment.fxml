@@ -199,8 +199,8 @@
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
-        max="100"
-        initialValue="10.0"
+        max="1"
+        initialValue="0.01"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
