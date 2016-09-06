@@ -21,8 +21,6 @@
  */
 package eu.mivrenik.particles.model;
 
-import java.util.concurrent.TimeUnit;
-
 public class Particle {
     private double posX;
     private double posY;
@@ -47,7 +45,7 @@ public class Particle {
     }
 
     Particle move(final long deltaTime, final double g) {
-        double deltaTimeSec = TimeUnit.MICROSECONDS.toSeconds(deltaTime);
+        double deltaTimeSec = deltaTime / 1000000.0;
 
         double newX = this.getPosX() + this.getVelocityX() * deltaTimeSec;
         double newY = this.getPosY() + this.getVelocityY() * deltaTimeSec - g * deltaTimeSec * deltaTimeSec / 2;
