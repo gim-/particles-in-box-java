@@ -18,7 +18,7 @@ public class SimulationWriter {
         ExperimentState currState = simulator.initialDistribution();
         ExperimentSettings experimentSettings = simulator.getSettings();
         long duration = TimeUnit.MINUTES.toMicros(experimentSettings.getDuration());
-        long deltaTime = Math.floorDiv(duration, experimentSettings.getFps());
+        long deltaTime = Math.floorDiv(1000000, experimentSettings.getFps());
         long currSnap = 0;
 
         try {

@@ -2,7 +2,6 @@ package eu.mivrenik.particles.model;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Simulator {
     private ExperimentSettings experimentSettings;
@@ -111,7 +110,7 @@ public class Simulator {
     }
 
     public static long calculateTimeStep(final ExperimentState experimentState) {
-        double speedMax = 0;
+        double speedMax = 0.0;
         double distanceMax = experimentState.getSettings().getParticleRadius() / 8;
 
         for (Particle particle : experimentState.getParticles()) {
@@ -122,7 +121,7 @@ public class Simulator {
             speedMax = experimentState.getSettings().getInitialSpeed();
         }
 
-        return TimeUnit.SECONDS.toMicros((int) Math.ceil(distanceMax / speedMax));
+        return (int) Math.floor(1000000 * distanceMax / speedMax);
     }
 
     public ExperimentState nextTimeStep(final ExperimentState experimentState, final long deltaTime) {
