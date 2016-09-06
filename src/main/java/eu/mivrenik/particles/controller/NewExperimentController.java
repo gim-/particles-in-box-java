@@ -93,25 +93,27 @@ public class NewExperimentController {
 
         ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
 
-        int particleCountLeftVal = (Integer) particleCountLeft.getValue();
-        int particleCountRightVal = (Integer) particleCountRight.getValue();
-        float particleRadiusVal = ((Double) particleRadius.getValue()).floatValue();
-        float initialSpeedVal = ((Double) initialSpeed.getValue()).floatValue();
-        float speedLossVal = ((Double) speedLoss.getValue()).floatValue();
-        float speedDeltaTopVal = ((Double) speedDeltaTop.getValue()).floatValue();
-        float speedDeltaBottomVal = ((Double) speedDeltaBottom.getValue()).floatValue();
-        float speedDeltaSidesVal = ((Double) speedDeltaSides.getValue()).floatValue();
-        float boxWidthVal = ((Double) boxWidth.getValue()).floatValue();
-        float boxHeightVal = ((Double) boxHeight.getValue()).floatValue();
-        float barrierPosXVal = ((Double) barrierPosX.getValue()).floatValue();
-        float barrierWidthVal = ((Double) barrierWidth.getValue()).floatValue();
-        float holePosYVal = ((Double) holePosY.getValue()).floatValue();
-        float holeHeightVal = ((Double) holeHeight.getValue()).floatValue();
-        float gVal = ((Double) g.getValue()).floatValue();
-        int durationVal = (Integer) duration.getValue();
-        int fpsVal = (Integer) fps.getValue();
+        int particleCountLeftVal = Integer.valueOf(particleCountLeft.getEditor().getText());
+        int particleCountRightVal = Integer.valueOf(particleCountRight.getEditor().getText());
+        float particleRadiusVal = Float.valueOf(particleRadius.getEditor().getText());
+        float initialSpeedVal = Float.valueOf(initialSpeed.getEditor().getText());
+        float speedLossVal = Float.valueOf(speedLoss.getEditor().getText());
+        float speedDeltaTopVal = Float.valueOf(speedDeltaTop.getEditor().getText());
+        float speedDeltaBottomVal = Float.valueOf(speedDeltaBottom.getEditor().getText());
+        float speedDeltaSidesVal = Float.valueOf(speedDeltaSides.getEditor().getText());
+        float boxWidthVal = Float.valueOf(boxWidth.getEditor().getText());
+        float boxHeightVal = Float.valueOf(boxHeight.getEditor().getText());
+        float barrierPosXVal = Float.valueOf(barrierPosX.getEditor().getText());
+        float barrierWidthVal = Float.valueOf(barrierWidth.getEditor().getText());
+        float holePosYVal = Float.valueOf(holePosY.getEditor().getText());
+        float holeHeightVal = Float.valueOf(holeHeight.getEditor().getText());
+        float gVal = Float.valueOf(g.getEditor().getText());
+        int durationVal = Integer.valueOf(duration.getEditor().getText());
+        int fpsVal = Integer.valueOf(fps.getEditor().getText());
         // TODO set seed value
         int seedVal = 255;
+
+        LOG.info("Left " + particleCountLeftVal);
 
         builder.particleCount(particleCountLeftVal,
                                  particleCountRightVal);
