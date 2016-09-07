@@ -1,4 +1,6 @@
 language: java
+before_install:
+- sudo apt-get install javafx
 cache:
   directories:
   - $HOME/.m2
