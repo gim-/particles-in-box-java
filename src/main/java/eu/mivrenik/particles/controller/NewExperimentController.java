@@ -22,7 +22,7 @@
 package eu.mivrenik.particles.controller;
 
 import eu.mivrenik.particles.model.ExperimentSettings;
-import eu.mivrenik.particles.model.SimulationWriter;
+import eu.mivrenik.particles.io.SimulationWriter;
 import eu.mivrenik.particles.model.Simulator;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
