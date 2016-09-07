@@ -131,7 +131,7 @@ public class NewExperimentController {
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
-        SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile.getName());
+        SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
         simulationWriter.saveSimulation();
 
         LOG.info("Run button clicked: " + Thread.currentThread());
