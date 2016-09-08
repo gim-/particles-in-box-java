@@ -59,7 +59,7 @@ public class ExperimentIOTest {
                 .particleCount(50, 50)
                 .fps(30)
                 .g(9.8f)
-                .duration(5)
+                .duration(1)
                 .seed(5553535)
                 .build();
 
