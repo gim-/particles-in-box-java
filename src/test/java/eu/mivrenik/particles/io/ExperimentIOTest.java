@@ -76,7 +76,7 @@ public class ExperimentIOTest {
         // refer to readme for explanation on those "magic numbers"
 
         assertEquals(3608, loader.getDataChunkSize());
-        assertEquals(30 * 5 * 60, loader.getStateCount()); // fps * duration
+        assertEquals(30 * 1 * 60, loader.getStateCount()); // fps * duration
     }
 
     @Test
