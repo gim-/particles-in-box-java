@@ -22,6 +22,8 @@
 
 package eu.mivrenik.particles.model;
 
+import java.util.Arrays;
+
 public final class ExperimentState {
     private final ExperimentSettings settings;
     private final Particle[] particles;
@@ -54,14 +56,14 @@ public final class ExperimentState {
 
         if (time != that.time) return false;
         if (!settings.equals(that.settings)) return false;
-        return particles.equals(that.particles);
+        return Arrays.equals(particles, that.particles);
 
     }
 
     @Override
     public int hashCode() {
         int result = settings.hashCode();
-        result = 31 * result + particles.hashCode();
+        result = 31 * result + Arrays.hashCode(particles);
         result = 31 * result + (int) (time ^ (time >>> 32));
         return result;
     }

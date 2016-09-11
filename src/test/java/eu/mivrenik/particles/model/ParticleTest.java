@@ -50,18 +50,6 @@ public class ParticleTest {
             this.upperBoundVelocity = upperBoundVelocity;
         }
 
-        public void setCoordinatesBound(double lowerBoundCoordinate,
-                                        double upperBoundCoordinate) {
-            this.lowerBoundCoordinate = lowerBoundCoordinate;
-            this.upperBoundCoordinate = upperBoundCoordinate;
-        }
-
-        public void setVelocityBound(double lowerBoundVelocity,
-                                     double upperBoundVelocity) {
-            this.lowerBoundVelocity = lowerBoundVelocity;
-            this.upperBoundVelocity = upperBoundVelocity;
-        }
-
         Particle nextParticle() {
             int id = rand.nextInt(upperBoundId);
             double x = generateDouble(lowerBoundCoordinate, upperBoundCoordinate),
