@@ -47,39 +47,39 @@ public class NewExperimentController {
     @FXML
     private TextField outputFileTextField;
     @FXML
-    private Spinner particleCountLeft;
+    private Spinner<Integer> particleCountLeft;
     @FXML
-    private Spinner particleCountRight;
+    private Spinner<Integer> particleCountRight;
     @FXML
-    private Spinner particleRadius;
+    private Spinner<Float> particleRadius;
     @FXML
-    private Spinner initialSpeed;
+    private Spinner<Float> initialSpeed;
     @FXML
-    private Spinner speedLoss;
+    private Spinner<Float> speedLoss;
     @FXML
-    private Spinner speedDeltaTop;
+    private Spinner<Float> speedDeltaTop;
     @FXML
-    private Spinner speedDeltaBottom;
+    private Spinner<Float> speedDeltaBottom;
     @FXML
-    private Spinner speedDeltaSides;
+    private Spinner<Float> speedDeltaSides;
     @FXML
-    private Spinner boxWidth;
+    private Spinner<Float> boxWidth;
     @FXML
-    private Spinner boxHeight;
+    private Spinner<Float> boxHeight;
     @FXML
-    private Spinner barrierPosX;
+    private Spinner<Float> barrierPosX;
     @FXML
-    private Spinner barrierWidth;
+    private Spinner<Float> barrierWidth;
     @FXML
-    private Spinner holePosY;
+    private Spinner<Float> holePosY;
     @FXML
-    private Spinner holeHeight;
+    private Spinner<Float> holeHeight;
     @FXML
-    private Spinner g;
+    private Spinner<Float> g;
     @FXML
-    private Spinner duration;
+    private Spinner<Integer> duration;
     @FXML
-    private Spinner fps;
+    private Spinner<Integer> fps;
 
     /**
      * Run experiment button click callback.
