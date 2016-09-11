@@ -59,7 +59,7 @@ public class ExperimentIOTest {
                 .particleCount(50, 50)
                 .fps(30)
                 .g(9.8f)
-                .duration(5)
+                .duration(1)
                 .seed(5553535)
                 .build();
 
@@ -76,7 +76,7 @@ public class ExperimentIOTest {
         // refer to readme for explanation on those "magic numbers"
 
         assertEquals(3608, loader.getDataChunkSize());
-        assertEquals(30 * 5 * 60, loader.getStateCount()); // fps * duration
+        assertEquals(30 * 1 * 60, loader.getStateCount()); // fps * duration
     }
 
     @Test

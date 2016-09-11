@@ -8,6 +8,7 @@ public class Simulator {
     private Random random = new Random();
 
     public Simulator(final ExperimentSettings experimentSettings) {
+        random.setSeed(experimentSettings.getSeed());
         this.experimentSettings = experimentSettings;
     }
 
@@ -121,7 +122,13 @@ public class Simulator {
             speedMax = experimentState.getSettings().getInitialSpeed();
         }
 
-        return (int) Math.floor(1000000 * distanceMax / speedMax);
+        long deltaTime = Math.round(1000000 * distanceMax / speedMax);
+
+        if (deltaTime == 0) {
+            deltaTime = Math.round(1000000.0 / experimentState.getSettings().getFps());
+        }
+
+        return deltaTime;
     }
 
     public ExperimentState nextTimeStep(final ExperimentState experimentState, final long deltaTime) {
@@ -204,11 +211,11 @@ public class Simulator {
                         if (dY > 0) {
                             movedParticles[i] = movedParticles[i]
                                     .setPosition(movedParticles[i].getPosX() + needToMove * cos,
-                                            movedParticles[i].getPosY() + needToMove * sin);
+                                                 movedParticles[i].getPosY() + needToMove * sin);
                         } else {
                             movedParticles[j] = movedParticles[j]
                                     .setPosition(movedParticles[j].getPosX() - needToMove * cos,
-                                            movedParticles[j].getPosY() - needToMove * sin);
+                                                 movedParticles[j].getPosY() - needToMove * sin);
                         }
                     }
                 }

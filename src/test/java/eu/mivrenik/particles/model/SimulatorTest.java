@@ -46,10 +46,9 @@ public class SimulatorTest {
                 .fps(30)
                 .duration(1)
                 .seed(241)
-                .speedLoss((float)0.01)
-                .g((float)9.8)
+                .speedLoss(0.01f)
+                .g(9.8f)
                 .particleRadius(1);
-
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -77,10 +76,9 @@ public class SimulatorTest {
                 .fps(30)
                 .duration(1)
                 .seed(241)
-                .speedLoss((float)0.01)
-                .g((float)9.8)
+                .speedLoss(0.01f)
+                .g(9.8f)
                 .particleRadius(1);
-
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -101,10 +99,9 @@ public class SimulatorTest {
                 .fps(30)
                 .duration(1)
                 .seed(241)
-                .speedLoss((float)0.01)
-                .g((float)9.8)
+                .speedLoss(0.01f)
+                .g(9.8f)
                 .particleRadius(1);
-
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -124,10 +121,9 @@ public class SimulatorTest {
                 .fps(30)
                 .duration(1)
                 .seed(241)
-                .speedLoss((float)0.01)
-                .g((float)9.8)
+                .speedLoss(0.01f)
+                .g(9.8f)
                 .particleRadius(1);
-
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -154,10 +150,9 @@ public class SimulatorTest {
                 .fps(30)
                 .duration(1)
                 .seed(241)
-                .speedLoss((float)0.01)
-                .g((float)9.8)
+                .speedLoss(0.01f)
+                .g(9.8f)
                 .particleRadius(1);
-
 
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
@@ -175,9 +170,9 @@ public class SimulatorTest {
         Particle[] afterMoving = nextState.getParticles();
 
         Arrays.sort(beforeMoving,
-                (p1, p2) -> { return (int) Math.signum(p1.getId() - p2.getId()); });
+                (p1, p2) -> { return p1.getId() - p2.getId(); });
         Arrays.sort(afterMoving,
-                (p1, p2) -> { return (int) Math.signum(p1.getId() - p2.getId()); });
+                (p1, p2) -> { return p1.getId() - p2.getId(); });
         
         for (int i = 0; i < startState.getParticles().length; i++) {
             assertEquals(true, beforeMoving[i].equals(afterMoving[i]));

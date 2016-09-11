@@ -21,33 +21,119 @@
  */
 package eu.mivrenik.particles.controller;
 
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import eu.mivrenik.particles.model.ExperimentSettings;
+import eu.mivrenik.particles.io.SimulationWriter;
+import eu.mivrenik.particles.model.Simulator;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * New experiment scene controller.
  */
 public class NewExperimentController {
     private static final Logger LOG = Logger.getLogger(NewExperimentController.class.getName());
-
+    private File outputFile = null;
     @FXML
     private Parent rootLayout;
     @FXML
     private TextField outputFileTextField;
+    @FXML
+    private Spinner particleCountLeft;
+    @FXML
+    private Spinner particleCountRight;
+    @FXML
+    private Spinner particleRadius;
+    @FXML
+    private Spinner initialSpeed;
+    @FXML
+    private Spinner speedLoss;
+    @FXML
+    private Spinner speedDeltaTop;
+    @FXML
+    private Spinner speedDeltaBottom;
+    @FXML
+    private Spinner speedDeltaSides;
+    @FXML
+    private Spinner boxWidth;
+    @FXML
+    private Spinner boxHeight;
+    @FXML
+    private Spinner barrierPosX;
+    @FXML
+    private Spinner barrierWidth;
+    @FXML
+    private Spinner holePosY;
+    @FXML
+    private Spinner holeHeight;
+    @FXML
+    private Spinner g;
+    @FXML
+    private Spinner duration;
+    @FXML
+    private Spinner fps;
 
     /**
      * Run experiment button click callback.
      */
-    public final void onRunClicked() {
-        // TODO Do stuff
+    public final void onRunClicked() throws Exception {
+        if (outputFile == null) {
+            LOG.info("File is not selected");
+        } else if (!outputFile.exists()) {
+            outputFile.createNewFile();
+        }
+
+        ExperimentSettings.Builder builder = ExperimentSettings.newBuilder();
+
+        int particleCountLeftVal = Integer.valueOf(particleCountLeft.getEditor().getText());
+        int particleCountRightVal = Integer.valueOf(particleCountRight.getEditor().getText());
+        float particleRadiusVal = Float.valueOf(particleRadius.getEditor().getText());
+        float initialSpeedVal = Float.valueOf(initialSpeed.getEditor().getText());
+        float speedLossVal = Float.valueOf(speedLoss.getEditor().getText());
+        float speedDeltaTopVal = Float.valueOf(speedDeltaTop.getEditor().getText());
+        float speedDeltaBottomVal = Float.valueOf(speedDeltaBottom.getEditor().getText());
+        float speedDeltaSidesVal = Float.valueOf(speedDeltaSides.getEditor().getText());
+        float boxWidthVal = Float.valueOf(boxWidth.getEditor().getText());
+        float boxHeightVal = Float.valueOf(boxHeight.getEditor().getText());
+        float barrierPosXVal = Float.valueOf(barrierPosX.getEditor().getText());
+        float barrierWidthVal = Float.valueOf(barrierWidth.getEditor().getText());
+        float holePosYVal = Float.valueOf(holePosY.getEditor().getText());
+        float holeHeightVal = Float.valueOf(holeHeight.getEditor().getText());
+        float gVal = Float.valueOf(g.getEditor().getText());
+        int durationVal = Integer.valueOf(duration.getEditor().getText());
+        int fpsVal = Integer.valueOf(fps.getEditor().getText());
+        // TODO set seed value
+        int seedVal = 255;
+
+        LOG.info("Left " + particleCountLeftVal);
+
+        builder.particleCount(particleCountLeftVal,
+                                 particleCountRightVal);
+        builder.initialSpeed(initialSpeedVal);
+        builder.speedLoss(speedLossVal);
+        builder.speedDelta(speedDeltaTopVal, speedDeltaSidesVal, speedDeltaBottomVal);
+        builder.g(gVal);
+        builder.boxSize(boxWidthVal, boxHeightVal);
+        builder.barrier(barrierPosXVal, barrierWidthVal);
+        builder.hole(holePosYVal, holeHeightVal);
+        builder.particleRadius(particleRadiusVal);
+        builder.fps(fpsVal);
+        builder.duration(durationVal);
+        builder.seed(seedVal);
+
+        ExperimentSettings experimentSettings = builder.build();
+        Simulator simulator = new Simulator(experimentSettings);
+        SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
+        simulationWriter.saveSimulation();
+
         LOG.info("Run button clicked: " + Thread.currentThread());
     }
 
@@ -58,7 +144,7 @@ public class NewExperimentController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose output file");
         fileChooser.setInitialFileName("particles-in-box-out.bin");
-        File outputFile = fileChooser.showSaveDialog(rootLayout.getScene().getWindow());
+        outputFile = fileChooser.showSaveDialog(rootLayout.getScene().getWindow());
         if (outputFile != null) {
             LOG.info("Chosen output file: " + outputFile);
             outputFileTextField.setText(outputFile.getAbsolutePath());
