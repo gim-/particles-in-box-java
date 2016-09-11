@@ -106,7 +106,7 @@ public class SimulatorTest {
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
         thrownException.expect(Exception.class);
-        ExperimentState startState = simulator.initialDistribution();
+        simulator.initialDistribution();
     }
 
     @Test
@@ -128,7 +128,7 @@ public class SimulatorTest {
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
         ExperimentState startState = simulator.initialDistribution();
-        ExperimentState nextState = simulator.nextTimeStep(startState, 10);
+        simulator.nextTimeStep(startState, 10);
 
         for (Particle particle: startState.getParticles()) {
             assertNotEquals(particle.getPosX(), Double.NaN);
@@ -173,7 +173,7 @@ public class SimulatorTest {
                 (p1, p2) -> { return p1.getId() - p2.getId(); });
         Arrays.sort(afterMoving,
                 (p1, p2) -> { return p1.getId() - p2.getId(); });
-        
+
         for (int i = 0; i < startState.getParticles().length; i++) {
             assertEquals(true, beforeMoving[i].equals(afterMoving[i]));
         }
