@@ -21,6 +21,11 @@
  */
 package eu.mivrenik.particles.controller;
 
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import eu.mivrenik.particles.scene.DemonstrationScene;
 import eu.mivrenik.particles.model.ExperimentSettings;
 import eu.mivrenik.particles.io.SimulationWriter;
 import eu.mivrenik.particles.model.Simulator;
@@ -31,10 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
-
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.stage.Stage;
 
 /**
  * New experiment scene controller.
@@ -134,7 +136,14 @@ public class NewExperimentController {
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
         simulationWriter.saveSimulation();
 
-        LOG.info("Run button clicked: " + Thread.currentThread());
+        // Show demonstration set
+        // TODO Pass data to a new stage
+        Stage stage = new Stage();
+        stage.setTitle("Demonstration");
+        stage.setScene(DemonstrationScene.newInstance());
+
+        rootLayout.getScene().getWindow().hide();
+        stage.show();
     }
 
     /**

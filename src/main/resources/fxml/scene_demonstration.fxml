@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import org.tbee.javafx.scene.layout.fxml.MigPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<MigPane
+  xmlns:fx="http://javafx.com/fxml/1"
+  stylesheets="@/styles/styles.css,@/styles/scene_demonstration.css"
+  fx:controller="eu.mivrenik.particles.controller.DemonstrationController"
+  layout="insets 10">
+  <MigPane MigPane.cc="grow">
+    <StackPane
+      style="-fx-background-color: black;"
+      MigPane.cc="span 3,wrap">
+      <Canvas
+        fx:id="canvas"
+        width="870"
+        height="550" />
+    </StackPane>
+    <Slider
+      fx:id="timeSlider"
+      MigPane.cc="span 3,grow,wrap" />
+    <StackPane MigPane.cc="span 3,grow">
+      <Label
+        fx:id="timeElapsedLabel"
+        text="Time elapsed: 0s"
+        StackPane.alignment="CENTER_LEFT"
+        MigPane.cc="alignx left" />
+      <Button
+        fx:id="playbackButton"
+        onMouseClicked="#onPlaybackClicked"
+        text="▯▯"
+        StackPane.alignment="CENTER" />
+      <Spinner
+        fx:id="fpsInput"
+        StackPane.alignment="CENTER_RIGHT">
+        <valueFactory>
+          <SpinnerValueFactory.IntegerSpinnerValueFactory
+            min="1"
+            max="100"
+            initialValue="30"
+            amountToStepBy="1" />
+        </valueFactory>
+        <editable>true</editable>
+      </Spinner>
+    </StackPane>
+  </MigPane>
+  <VBox MigPane.cc="grow,push">
+    <BarChart
+      fx:id="barChart"
+      prefWidth="320"
+      prefHeight="231">
+      <xAxis>
+        <CategoryAxis side="BOTTOM" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT" />
+      </yAxis>
+    </BarChart>
+    <LineChart
+      fx:id="lineChart"
+      prefWidth="320"
+      prefHeight="231">
+      <xAxis>
+        <CategoryAxis side="BOTTOM" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT" />
+      </yAxis>
+    </LineChart>
+  </VBox>
+</MigPane>
+
