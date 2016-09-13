@@ -52,6 +52,8 @@ public class NewExperimentController {
     @FXML
     private TextField outputFileTextField;
     @FXML
+    private Pane dropFileSpace;
+    @FXML
     private Spinner<Integer> particleCountLeft;
     @FXML
     private Spinner<Integer> particleCountRight;
@@ -199,14 +201,70 @@ public class NewExperimentController {
      * @param event
      *            Event data.
      */
-    public final void onDragDropped(final DragEvent event) {
+    public final void onDragDropped(final DragEvent event) throws IOException {
         boolean success = false;
         LOG.log(Level.FINE, "Drag dropped: " + event.getDragboard().getString());
         if (event.getDragboard().hasFiles()) {
             File file = event.getDragboard().getFiles().get(0);
             // Check if file has a valid extension
             if (file.getName().endsWith(".bin")) {
-                // TODO Handle file
+                ExperimentLoader loader = new ExperimentLoader(file);
+                ExperimentSettings experimentSettings = loader.getExperimentSettings();
+
+                int particleCountLeftVal = experimentSettings.getParticleCountLeft();
+                int particleCountRightVal = experimentSettings.getParticleCountRight();
+                float particleRadiusVal = experimentSettings.getParticleRadius();
+                float initialSpeedVal = experimentSettings.getInitialSpeed();
+                float speedLossVal = experimentSettings.getSpeedLoss();
+                float speedDeltaTopVal = experimentSettings.getSpeedDeltaTop();
+                float speedDeltaBottomVal = experimentSettings.getSpeedDeltaBottom();
+                float speedDeltaSidesVal = experimentSettings.getSpeedDeltaSides();
+                float boxWidthVal = experimentSettings.getBoxWidth();
+                float boxHeightVal = experimentSettings.getBoxHeight();
+                float barrierPosXVal = experimentSettings.getBarrierPosX();
+                float barrierWidthVal = experimentSettings.getBarrierWidth();
+                float holePosYVal = experimentSettings.getHolePosY();
+                float holeHeightVal = experimentSettings.getHoleHeight();
+                float gVal = experimentSettings.getG();
+                int durationVal = experimentSettings.getDuration();
+                int fpsVal = experimentSettings.getFps();
+
+                particleCountLeft.getEditor().setText(Integer.toString(particleCountLeftVal));
+                particleCountRight.getEditor().setText(Integer.toString(particleCountRightVal));
+                particleRadius.getEditor().setText(Float.toString(particleRadiusVal));
+                initialSpeed.getEditor().setText(Float.toString(initialSpeedVal));
+                speedLoss.getEditor().setText(Float.toString(speedLossVal));
+                speedDeltaTop.getEditor().setText(Float.toString(speedDeltaTopVal));
+                speedDeltaBottom.getEditor().setText(Float.toString(speedDeltaBottomVal));
+                speedDeltaSides.getEditor().setText(Float.toString(speedDeltaSidesVal));
+                boxWidth.getEditor().setText(Float.toString(boxWidthVal));
+                boxHeight.getEditor().setText(Float.toString(boxHeightVal));
+                barrierPosX.getEditor().setText(Float.toString(barrierPosXVal));
+                barrierWidth.getEditor().setText(Float.toString(barrierWidthVal));
+                holePosY.getEditor().setText(Float.toString(holePosYVal));
+                holeHeight.getEditor().setText(Float.toString(holeHeightVal));
+                g.getEditor().setText(Float.toString(gVal));
+                duration.getEditor().setText(Integer.toString(durationVal));
+                fps.getEditor().setText(Integer.toString(fpsVal));
+
+                particleCountLeft.setEditable(false);
+                particleCountRight.setEditable(false);
+                particleRadius.setEditable(false);
+                initialSpeed.setEditable(false);
+                speedLoss.setEditable(false);
+                speedDeltaTop.setEditable(false);
+                speedDeltaBottom.setEditable(false);
+                speedDeltaSides.setEditable(false);
+                boxWidth.setEditable(false);
+                boxHeight.setEditable(false);
+                barrierPosX.setEditable(false);
+                barrierWidth.setEditable(false);
+                holePosY.setEditable(false);
+                holeHeight.setEditable(false);
+                g.setEditable(false);
+                duration.setEditable(false);
+                fps.setEditable(false);
+
                 LOG.info("Dropped file: " + file);
                 success = true;
             }
