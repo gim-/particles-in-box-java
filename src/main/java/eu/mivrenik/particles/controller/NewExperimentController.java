@@ -21,22 +21,25 @@
  */
 package eu.mivrenik.particles.controller;
 
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import eu.mivrenik.particles.scene.DemonstrationScene;
-import eu.mivrenik.particles.model.ExperimentSettings;
+import eu.mivrenik.particles.io.ExperimentLoader;
 import eu.mivrenik.particles.io.SimulationWriter;
+import eu.mivrenik.particles.model.ExperimentSettings;
 import eu.mivrenik.particles.model.Simulator;
+import eu.mivrenik.particles.scene.DemonstrationScene;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * New experiment scene controller.
@@ -115,8 +118,6 @@ public class NewExperimentController {
         // TODO set seed value
         int seedVal = 255;
 
-        LOG.info("Left " + particleCountLeftVal);
-
         builder.particleCount(particleCountLeftVal,
                                  particleCountRightVal);
         builder.initialSpeed(initialSpeedVal);
@@ -158,6 +159,24 @@ public class NewExperimentController {
             LOG.info("Chosen output file: " + outputFile);
             outputFileTextField.setText(outputFile.getAbsolutePath());
         }
+
+        particleCountLeft.setEditable(true);
+        particleCountRight.setEditable(true);
+        particleRadius.setEditable(true);
+        initialSpeed.setEditable(true);
+        speedLoss.setEditable(true);
+        speedDeltaTop.setEditable(true);
+        speedDeltaBottom.setEditable(true);
+        speedDeltaSides.setEditable(true);
+        boxWidth.setEditable(true);
+        boxHeight.setEditable(true);
+        barrierPosX.setEditable(true);
+        barrierWidth.setEditable(true);
+        holePosY.setEditable(true);
+        holeHeight.setEditable(true);
+        g.setEditable(true);
+        duration.setEditable(true);
+        fps.setEditable(true);
     }
 
     /**
