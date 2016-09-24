@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import eu.mivrenik.particles.io.ExperimentLoader;
+import eu.mivrenik.particles.model.ExperimentState;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -51,7 +52,8 @@ public class DemonstrationController implements Initializable {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        timeSlider.setMax((double) loader.getStateCount());
+        timeSlider.setMax((double) loader.getStateCount() - 1);
+        timeSlider.setMinorTickCount(1);
 
         // Time slider value changed listener
         timeSlider.valueProperty().addListener(
@@ -60,6 +62,24 @@ public class DemonstrationController implements Initializable {
         fpsInput.valueProperty().addListener(
                 (ov, o, n) -> onFpsValueChanged(o, n));
     }
+
+    private void setState(final int newValue, boolean setSlider) throws Exception {
+        ExperimentState state = loader.getState(newValue);
+
+        double timeElapsed = state.getTime() / 1_000_000.0;
+        timeElapsedLabel.setText("Time elapsed: " + timeElapsedFormat.format(timeElapsed) + "s");
+
+        redraw(state);
+
+        if (setSlider) {
+            timeSlider.setValue((double) newValue);
+        }
+    }
+
+    private void redraw(final ExperimentState state) {
+        // TODO: implement canvas redraw
+    }
+
 
     /**
      * Playback button click callback.
@@ -78,8 +98,12 @@ public class DemonstrationController implements Initializable {
      * @param newValue
      *            Value changed to.
      */
-    public void onTimeSliderValueChanged(final Number oldValue, final Number newValue) {
-        timeElapsedLabel.setText("Time elapsed: " + timeElapsedFormat.format((int) newValue) + "s");
+    public void onTimeSliderValueChanged(final Number oldValue, final Number newValue)  {
+        try {
+            setState(newValue.intValue(), false);
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+        }
     }
 
     /**
