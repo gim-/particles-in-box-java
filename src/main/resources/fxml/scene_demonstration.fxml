@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.StackPane?>
 
 <MigPane
+  fx:id="rootLayout"
   xmlns:fx="http://javafx.com/fxml/1"
   stylesheets="@/styles/styles.css,@/styles/scene_demonstration.css"
-  fx:controller="eu.mivrenik.particles.controller.DemonstrationController"
   layout="insets 10">
   <MigPane MigPane.cc="grow">
     <StackPane

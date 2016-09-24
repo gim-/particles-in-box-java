@@ -1,11 +1,14 @@
 package eu.mivrenik.particles.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import eu.mivrenik.particles.io.ExperimentLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -24,6 +27,8 @@ public class DemonstrationController implements Initializable {
 
     private NumberFormat timeElapsedFormat = new DecimalFormat("#.##");
 
+    private ExperimentLoader loader;
+
     @FXML
     private Canvas canvas;
     @FXML
@@ -39,8 +44,15 @@ public class DemonstrationController implements Initializable {
     @FXML
     private LineChart<Float, Float> lineChart;
 
+    public DemonstrationController(final String filePath) throws IOException {
+        File sourceFile = new File(filePath);
+        loader = new ExperimentLoader(sourceFile);
+    }
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+        timeSlider.setMax((double) loader.getStateCount());
+
         // Time slider value changed listener
         timeSlider.valueProperty().addListener(
                 (ov, o, n) -> onTimeSliderValueChanged(o, n));
@@ -67,7 +79,7 @@ public class DemonstrationController implements Initializable {
      *            Value changed to.
      */
     public void onTimeSliderValueChanged(final Number oldValue, final Number newValue) {
-        timeElapsedLabel.setText("Time elapsed: " + timeElapsedFormat.format(newValue) + "s");
+        timeElapsedLabel.setText("Time elapsed: " + timeElapsedFormat.format((int) newValue) + "s");
     }
 
     /**
