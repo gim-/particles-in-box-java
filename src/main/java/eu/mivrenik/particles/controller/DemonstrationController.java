@@ -63,21 +63,31 @@ public class DemonstrationController implements Initializable {
                 (ov, o, n) -> onFpsValueChanged(o, n));
     }
 
-    private void setState(final int newValue, boolean setSlider) throws Exception {
+    private void setState(final int newValue, final boolean updateSlider) throws Exception {
         ExperimentState state = loader.getState(newValue);
 
         double timeElapsed = state.getTime() / 1_000_000.0;
         timeElapsedLabel.setText("Time elapsed: " + timeElapsedFormat.format(timeElapsed) + "s");
 
         redraw(state);
+        redrawMaxwellDistribution(state);
+        redrawBoltzmannDistribution(state);
 
-        if (setSlider) {
+        if (updateSlider) {
             timeSlider.setValue((double) newValue);
         }
     }
 
     private void redraw(final ExperimentState state) {
-        // TODO: implement canvas redraw
+        // TODO Method stub.
+    }
+
+    private void redrawMaxwellDistribution(final ExperimentState state) {
+        // TODO Method stub.
+    }
+
+    private void redrawBoltzmannDistribution(final ExperimentState state) {
+        // TODO Method stub.
     }
 
 
