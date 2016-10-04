@@ -21,19 +21,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
 
 /**
  * Demonstration scene controller.
  */
 public class DemonstrationController implements Initializable {
     private static final Logger LOG = Logger.getLogger(DemonstrationController.class.getName());
-
-    private final int boltzmannBins = 20;
 
     private NumberFormat timeElapsedFormat = new DecimalFormat("#.##");
 
@@ -54,7 +53,7 @@ public class DemonstrationController implements Initializable {
     @FXML
     private BarChart<String, Number> boltzmannChart;
     @FXML
-    private LineChart<Float, Float> lineChart;
+    private LineChart<Double, Double> lineChart;
 
     public DemonstrationController(final String filePath) throws IOException {
         File sourceFile = new File(filePath);
@@ -82,7 +81,7 @@ public class DemonstrationController implements Initializable {
 
         redraw(state);
         redrawMaxwellDistribution(state, 20);
-        redrawBoltzmannDistribution(state, boltzmannBins);
+        redrawBoltzmannDistribution(state, 20);
 
         if (updateSlider) {
             timeSlider.setValue((double) newValue);
@@ -94,56 +93,50 @@ public class DemonstrationController implements Initializable {
     }
 
     private void redrawMaxwellDistribution(final ExperimentState state, final int binsNum) {
-        double[] x = new double[binsNum];
-        double[] y = new double[binsNum];
+        ArrayList<Double> x = new ArrayList<>(binsNum);
+        ArrayList<Double> yExperimental = new ArrayList<>(binsNum);
 
-        double maxVelocity = Double.MIN_VALUE;
-        double minVelocity = Double.MAX_VALUE;
-        double heightMax = Double.MIN_VALUE;
-        double heightMin = Double.MAX_VALUE;
-
-        for (Particle particle : state.getParticles()) {
-            double speed = particle.getSpeed();
-            maxVelocity = Math.max(speed, maxVelocity);
-            minVelocity = Math.min(speed, minVelocity);
-        }
+        DoubleStream speedStream = Arrays.stream(state.getParticles())
+                .mapToDouble(Particle::getSpeed);
+        double maxVelocity = speedStream.max().orElse(1.0);
 
         double deltaVelocity = maxVelocity / binsNum;
 
+        XYChart.Series<Double, Double> experimentalSeries = new XYChart.Series<>();
+        XYChart.Series<Double, Double> theoreticalSeries = new XYChart.Series<>();
+
+        lineChart.getData().clear();
+
         for (int i = 0; i < binsNum; i++) {
-            x[i] = deltaVelocity * (i + 1);
-            y[i] = 0;
+            x.add(deltaVelocity * (i + 1));
+            yExperimental.add(0.0);
         }
 
         for (Particle particle : state.getParticles()) {
             double speed = particle.getSpeed();
             int chunk = (int) ((speed - deltaVelocity / 2.0) / deltaVelocity);
-            y[chunk]++;
+            yExperimental.set(chunk, yExperimental.get(chunk) + 1);
         }
 
         for (int i = 0; i < binsNum; i++) {
-            y[i] = y[i] / (double) state.getParticles().length;
+            yExperimental.set(i, yExperimental.get(i) / (double) state.getParticles().length);
         }
 
-        for (double currHeight : y) {
-            heightMin = Math.min(heightMin, currHeight);
-            heightMax = Math.max(heightMax, currHeight);
-        }
-
-        XYChart.Series maxwellSeries = new XYChart.Series();
         for (int i = 0; i < binsNum; i++) {
-            maxwellSeries.getData().add(new XYChart.Data(x[i], y[i]));
+            experimentalSeries.getData().add(new XYChart.Data<>(x.get(i), yExperimental.get(i)));
         }
-        // TODO add bar chart for experimental [x, y]
 
-        double probableVelocity = x[Arrays.asList(y).indexOf(heightMax)];
+        double probableVelocity = x.get(yExperimental.indexOf(Collections.max(yExperimental)));
         double k = 4 / Math.sqrt(Math.PI) * Math.pow(1.0 / probableVelocity, 3.0);
 
         for (int i = 0; i < binsNum; i++) {
-            y[i] = k * Math.pow(x[i], 2.0) * Math.exp(-Math.pow(x[i], 2.0) / Math.pow(probableVelocity, 2.0));
+            double y = k * Math.pow(x.get(i), 2.0) *
+                    Math.exp(-Math.pow(x.get(i), 2.0) / Math.pow(probableVelocity, 2.0));
+
+            theoreticalSeries.getData().add(new XYChart.Data<>(x.get(i), y));
         }
 
-        lineChart.getData().add(maxwellSeries);
+        lineChart.getData().addAll(experimentalSeries, theoreticalSeries);
     }
 
     private void redrawBoltzmannDistribution(final ExperimentState state, final int binsNum) {

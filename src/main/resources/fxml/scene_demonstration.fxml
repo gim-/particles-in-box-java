@@ -66,7 +66,7 @@
       prefWidth="320"
       prefHeight="320">
       <xAxis>
-        <CategoryAxis side="BOTTOM" />
+        <NumberAxis side="BOTTOM" />
       </xAxis>
       <yAxis>
         <NumberAxis side="LEFT" />
