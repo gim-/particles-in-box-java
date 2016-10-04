@@ -3,6 +3,8 @@ package eu.mivrenik.particles.controller;
 import eu.mivrenik.particles.io.ExperimentLoader;
 import eu.mivrenik.particles.model.ExperimentState;
 import eu.mivrenik.particles.model.Particle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -22,6 +24,8 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
 
 /**
  * Demonstration scene controller.
@@ -29,9 +33,13 @@ import java.util.logging.Logger;
 public class DemonstrationController implements Initializable {
     private static final Logger LOG = Logger.getLogger(DemonstrationController.class.getName());
 
+    private final int boltzmannBins = 20;
+
     private NumberFormat timeElapsedFormat = new DecimalFormat("#.##");
 
     private ExperimentLoader loader;
+
+    private ObservableList<String> heightChunks = FXCollections.observableArrayList();
 
     @FXML
     private Canvas canvas;
@@ -44,7 +52,7 @@ public class DemonstrationController implements Initializable {
     @FXML
     private Spinner<Integer> fpsInput;
     @FXML
-    private BarChart<Float, Float> barChart;
+    private BarChart<String, Number> boltzmannChart;
     @FXML
     private LineChart<Float, Float> lineChart;
 
@@ -74,7 +82,7 @@ public class DemonstrationController implements Initializable {
 
         redraw(state);
         redrawMaxwellDistribution(state, 20);
-        redrawBoltzmannDistribution(state, 20);
+        redrawBoltzmannDistribution(state, boltzmannBins);
 
         if (updateSlider) {
             timeSlider.setValue((double) newValue);
@@ -85,7 +93,7 @@ public class DemonstrationController implements Initializable {
         // TODO Method stub.
     }
 
-    private void redrawMaxwellDistribution(final ExperimentState state, int binsNum) {
+    private void redrawMaxwellDistribution(final ExperimentState state, final int binsNum) {
         double[] x = new double[binsNum];
         double[] y = new double[binsNum];
 
@@ -139,17 +147,15 @@ public class DemonstrationController implements Initializable {
     }
 
     private void redrawBoltzmannDistribution(final ExperimentState state, final int binsNum) {
-        double heightMax = Double.MIN_VALUE;
-        double heightMin = Double.MAX_VALUE;
+        final NumberFormat dataFormat = new DecimalFormat("#.##");
 
-        for (Particle particle : state.getParticles()) {
-            heightMax = Math.max(heightMax, particle.getPosY());
-            heightMin = Math.min(heightMin, particle.getPosY());
-        }
-
-        double deltaHeight = heightMax / binsNum;
+        final double deltaHeight = state.getSettings().getBoxHeight() / binsNum;
         double[] x = new double[binsNum];
         int[] y = new int[binsNum];
+        XYChart.Series<String, Number> boltzmannSeries = new XYChart.Series<>();
+
+
+        boltzmannChart.getData().clear();
 
         for (int i = 0; i < binsNum; i++) {
             y[i] = 0;
@@ -161,15 +167,14 @@ public class DemonstrationController implements Initializable {
             y[chunk]++;
         }
 
-        XYChart.Series boltzmannSeries = new XYChart.Series();
-
         for (int i = 0; i < binsNum; i++) {
-            boltzmannSeries.getData().add(new XYChart.Data(x[i], y[i]));
+            boltzmannSeries.getData().add(new XYChart.Data<>(dataFormat.format(x[i]),
+                                                            y[i]));
         }
 
-        barChart.getData().add(boltzmannSeries);
-
-        // TODO Set bar width
+        boltzmannChart.getData().add(boltzmannSeries);
+        boltzmannChart.setBarGap(0.0);
+        boltzmannChart.setCategoryGap(0.0);
     }
 
 
@@ -195,6 +200,7 @@ public class DemonstrationController implements Initializable {
             setState(newValue.intValue(), false);
         } catch (Exception e) {
             LOG.severe(e.getMessage());
+            e.printStackTrace();
         }
     }
 

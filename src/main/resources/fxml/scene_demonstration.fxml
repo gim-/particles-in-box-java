@@ -51,9 +51,9 @@
   </MigPane>
   <VBox MigPane.cc="grow,push">
     <BarChart
-      fx:id="barChart"
+      fx:id="boltzmannChart"
       prefWidth="320"
-      prefHeight="231">
+      prefHeight="320">
       <xAxis>
         <CategoryAxis side="BOTTOM" />
       </xAxis>
@@ -64,7 +64,7 @@
     <LineChart
       fx:id="lineChart"
       prefWidth="320"
-      prefHeight="231">
+      prefHeight="320">
       <xAxis>
         <CategoryAxis side="BOTTOM" />
       </xAxis>
