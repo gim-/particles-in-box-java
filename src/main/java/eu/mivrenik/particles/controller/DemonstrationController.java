@@ -130,8 +130,8 @@ public class DemonstrationController implements Initializable {
         double k = 4 / Math.sqrt(Math.PI) * Math.pow(1.0 / probableVelocity, 3.0);
 
         for (int i = 0; i < binsNum; i++) {
-            double y = k * Math.pow(x.get(i), 2.0) *
-                    Math.exp(-Math.pow(x.get(i), 2.0) / Math.pow(probableVelocity, 2.0));
+            double y = k * Math.pow(x.get(i), 2.0)
+                    * Math.exp(-Math.pow(x.get(i), 2.0) / Math.pow(probableVelocity, 2.0));
 
             theoreticalSeries.getData().add(new XYChart.Data<>(x.get(i), y));
         }
