@@ -48,7 +48,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="1.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -91,7 +91,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="1.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -122,7 +122,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="0.01"
+        initialValue="0.1"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -134,7 +134,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="1.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -151,7 +151,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="5.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -186,7 +186,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="2.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -212,7 +212,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="9.8"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -229,7 +229,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="5.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
@@ -264,7 +264,7 @@
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
         max="100"
-        initialValue="10.0"
+        initialValue="2.0"
         amountToStepBy="0.01" />
     </valueFactory>
   </Spinner>
