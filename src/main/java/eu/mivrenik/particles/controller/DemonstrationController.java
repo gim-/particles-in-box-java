@@ -1,6 +1,7 @@
 package eu.mivrenik.particles.controller;
 
 import eu.mivrenik.particles.io.ExperimentLoader;
+import eu.mivrenik.particles.model.ExperimentSettings;
 import eu.mivrenik.particles.model.ExperimentState;
 import eu.mivrenik.particles.model.Particle;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +74,13 @@ public class DemonstrationController implements Initializable {
         // FPS input value changed listener
         fpsInput.valueProperty().addListener(
                 (ov, o, n) -> onFpsValueChanged(o, n));
+
+        initializeCanvas();
+        try {
+            setState(0, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setState(final int newValue, final boolean updateSlider) throws Exception {
@@ -88,8 +98,40 @@ public class DemonstrationController implements Initializable {
         }
     }
 
+    private void initializeCanvas() {
+        ExperimentSettings settings = loader.getExperimentSettings();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        double mxx = canvas.getWidth() / settings.getBoxWidth();
+        double myy = -canvas.getHeight() / settings.getBoxHeight();
+
+        gc.setTransform(mxx, 0.0, 0.0, myy, 0.0, canvas.getHeight());
+    }
+
     private void redraw(final ExperimentState state) {
-        // TODO Method stub.
+        ExperimentSettings settings = loader.getExperimentSettings();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        double barrierWidth = settings.getBarrierWidth();
+        double barrierXMin = settings.getBarrierPosX() - barrierWidth / 2;
+        double holeHeight = settings.getHoleHeight();
+        double upperBarrierHeight = settings.getBoxHeight() - settings.getHolePosY() - holeHeight / 2;
+        double lowerBarrierHeight = settings.getHolePosY() - holeHeight / 2;
+        double particleR = settings.getParticleRadius();
+
+        gc.clearRect(0, 0, settings.getBoxWidth(), settings.getBoxHeight());
+        gc.setFill(Color.WHITE);
+        gc.fillRect(barrierXMin, 0, barrierWidth, lowerBarrierHeight);
+        gc.fillRect(barrierXMin, settings.getBoxHeight() - upperBarrierHeight, barrierWidth, upperBarrierHeight);
+
+        for (Particle p : state.getParticles()) {
+            if ((p.getId() & 1) == 0) {
+                gc.setFill(Color.INDIANRED);
+            } else {
+                gc.setFill(Color.BLUEVIOLET);
+            }
+
+            gc.fillOval(p.getPosX(), p.getPosY(), particleR, particleR);
+        }
     }
 
     private void redrawMaxwellDistribution(final ExperimentState state, final int binsNum) {
