@@ -28,6 +28,7 @@ import eu.mivrenik.particles.model.Simulator;
 import eu.mivrenik.particles.scene.DemonstrationScene;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
@@ -142,8 +143,9 @@ public class NewExperimentController {
         // Show demonstration set
         // TODO Pass data to a new stage
         Stage stage = new Stage();
+        Scene scene = DemonstrationScene.newInstance(outputFile.getAbsolutePath());
         stage.setTitle("Demonstration");
-        stage.setScene(DemonstrationScene.newInstance());
+        stage.setScene(scene);
 
         rootLayout.getScene().getWindow().hide();
         stage.show();

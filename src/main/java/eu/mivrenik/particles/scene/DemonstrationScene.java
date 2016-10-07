@@ -2,6 +2,7 @@ package eu.mivrenik.particles.scene;
 
 import java.io.IOException;
 
+import eu.mivrenik.particles.controller.DemonstrationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,12 +24,19 @@ public final class DemonstrationScene extends Scene {
      *
      * @return Current class instance.
      */
-    public static DemonstrationScene newInstance() {
+    public static DemonstrationScene newInstance(final String filePath) {
         String fxmlFile = "/fxml/scene_demonstration.fxml";
-        FXMLLoader loader = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader(
+                NewExperimentScene.class.getResource(fxmlFile)
+        );
+
         Parent rootNode;
+
         try {
-            rootNode = (Parent) loader.load(NewExperimentScene.class.getResourceAsStream(fxmlFile));
+            DemonstrationController controller = new DemonstrationController(filePath);
+            loader.setController(controller);
+
+            rootNode = (Parent) loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
