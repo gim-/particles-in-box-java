@@ -65,6 +65,10 @@ public class DemonstrationController implements Initializable {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+        lineChart.setCreateSymbols(false);
+        lineChart.setLegendVisible(false);
+        boltzmannChart.setLegendVisible(false);
+
         timeSlider.setMax((double) loader.getStateCount() - 1);
         timeSlider.setMinorTickCount(1);
 
@@ -91,7 +95,7 @@ public class DemonstrationController implements Initializable {
 
         redraw(state);
         redrawMaxwellDistribution(state, 20);
-        redrawBoltzmannDistribution(state, 20);
+        redrawBoltzmannDistribution(state, 17);
 
         if (updateSlider) {
             timeSlider.setValue((double) newValue);
@@ -149,22 +153,23 @@ public class DemonstrationController implements Initializable {
 
         lineChart.getData().clear();
 
-        for (int i = 0; i < binsNum; i++) {
+        for (int i = -1; i < binsNum; i++) {
             x.add(deltaVelocity * (i + 1));
             yExperimental.add(0.0);
         }
 
         for (Particle particle : state.getParticles()) {
             double speed = particle.getSpeed();
-            int chunk = (int) ((speed - deltaVelocity / 2.0) / deltaVelocity);
-            yExperimental.set(chunk, yExperimental.get(chunk) + 1);
+
+            int idx = Math.min((int) Math.floor(speed / deltaVelocity), binsNum - 1);
+            yExperimental.set(idx, yExperimental.get(idx) + 1);
         }
 
-        for (int i = 0; i < binsNum; i++) {
-            yExperimental.set(i, yExperimental.get(i) / (double) state.getParticles().length);
+        for (int i = 0; i < yExperimental.size(); i++) {
+            yExperimental.set(i, yExperimental.get(i) / (state.getParticles().length * deltaVelocity));
         }
 
-        for (int i = 0; i < binsNum; i++) {
+        for (int i = 0; i < yExperimental.size(); i++) {
             experimentalSeries.getData().add(new XYChart.Data<>(x.get(i), yExperimental.get(i)));
         }
 
