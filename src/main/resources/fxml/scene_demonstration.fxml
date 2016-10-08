@@ -83,5 +83,27 @@
       </yAxis>
     </BarChart>
   </VBox>
+  <VBox MigPane.cc="grow,push">
+    <LineChart
+      prefWidth="240"
+      prefHeight="213">
+      <xAxis>
+        <NumberAxis side="BOTTOM" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT" />
+      </yAxis>
+    </LineChart>
+    <LineChart
+      prefWidth="240"
+      prefHeight="213">
+      <xAxis>
+        <NumberAxis side="BOTTOM" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT" />
+      </yAxis>
+    </LineChart>
+  </VBox>
 </MigPane>
 
