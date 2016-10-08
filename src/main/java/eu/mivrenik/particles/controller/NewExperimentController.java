@@ -206,7 +206,7 @@ public class NewExperimentController {
         Simulator simulator = new Simulator(experimentSettings);
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
 
-        if (openedFileLabel.isDisable()) {
+        if (!openedFileLabel.isVisible()) {
             simulationWriter.saveSimulation();
         }
 
