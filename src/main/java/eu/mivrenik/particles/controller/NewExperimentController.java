@@ -49,11 +49,12 @@ import java.util.logging.Logger;
 public class NewExperimentController {
     private static final Logger LOG = Logger.getLogger(NewExperimentController.class.getName());
     private File outputFile = null;
-    private boolean isLoaded = false;
     @FXML
     private Parent rootLayout;
     @FXML
     private TextField outputFileTextField;
+    @FXML
+    private Label openedFileLabel;
     @FXML
     private Pane dropFileSpace;
     @FXML
@@ -131,31 +132,26 @@ public class NewExperimentController {
         g.getEditor().setText(Float.toString(gVal));
         duration.getEditor().setText(Integer.toString(durationVal));
         fps.getEditor().setText(Integer.toString(fpsVal));
+    }
 
-        particleCountLeft.setEditable(false);
-        particleCountRight.setEditable(false);
-        particleRadius.setEditable(false);
-        initialSpeed.setEditable(false);
-        speedLoss.setEditable(false);
-        speedDeltaTop.setEditable(false);
-        speedDeltaBottom.setEditable(false);
-        speedDeltaSides.setEditable(false);
-        boxWidth.setEditable(false);
-        boxHeight.setEditable(false);
-        barrierPosX.setEditable(false);
-        barrierWidth.setEditable(false);
-        holePosY.setEditable(false);
-        holeHeight.setEditable(false);
-        g.setEditable(false);
-        duration.setEditable(false);
-        fps.setEditable(false);
-
-        Label fileLabel = new Label(outputFile.getAbsolutePath());
-        fileLabel.setLayoutX(23);
-        fileLabel.setLayoutY(12);
-        dropFileSpace.getChildren().add(fileLabel);
-
-        isLoaded = true;
+    private void setEditableSpinners(final boolean flag) {
+        particleCountLeft.setEditable(flag);
+        particleCountRight.setEditable(flag);
+        particleRadius.setEditable(flag);
+        initialSpeed.setEditable(flag);
+        speedLoss.setEditable(flag);
+        speedDeltaTop.setEditable(flag);
+        speedDeltaBottom.setEditable(flag);
+        speedDeltaSides.setEditable(flag);
+        boxWidth.setEditable(flag);
+        boxHeight.setEditable(flag);
+        barrierPosX.setEditable(flag);
+        barrierWidth.setEditable(flag);
+        holePosY.setEditable(flag);
+        holeHeight.setEditable(flag);
+        g.setEditable(flag);
+        duration.setEditable(flag);
+        fps.setEditable(flag);
     }
 
     /**
@@ -210,7 +206,7 @@ public class NewExperimentController {
         Simulator simulator = new Simulator(experimentSettings);
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
 
-        if (!isLoaded) {
+        if (openedFileLabel.isDisable()) {
             simulationWriter.saveSimulation();
         }
 
@@ -237,40 +233,29 @@ public class NewExperimentController {
             LOG.info("Chosen output file: " + outputFile);
             outputFileTextField.setText(outputFile.getAbsolutePath());
         }
-
-        dropFileSpace.getChildren().clear();
-        isLoaded = false;
-
-        particleCountLeft.setEditable(true);
-        particleCountRight.setEditable(true);
-        particleRadius.setEditable(true);
-        initialSpeed.setEditable(true);
-        speedLoss.setEditable(true);
-        speedDeltaTop.setEditable(true);
-        speedDeltaBottom.setEditable(true);
-        speedDeltaSides.setEditable(true);
-        boxWidth.setEditable(true);
-        boxHeight.setEditable(true);
-        barrierPosX.setEditable(true);
-        barrierWidth.setEditable(true);
-        holePosY.setEditable(true);
-        holeHeight.setEditable(true);
-        g.setEditable(true);
-        duration.setEditable(true);
-        fps.setEditable(true);
     }
 
     /**
      * Called when mouse clicked on area.
      */
     public final void onMouseClicked() throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose file for opening");
-        outputFile = fileChooser.showOpenDialog(rootLayout.getScene().getWindow());
+        if (!openedFileLabel.isVisible()) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose file for opening");
+            outputFile = fileChooser.showOpenDialog(rootLayout.getScene().getWindow());
 
-        if (outputFile.getName().endsWith(".bin")) {
-            openSimulationFile(outputFile);
-            isLoaded = true;
+            if (outputFile == null) {
+                LOG.info("File for opening is not selected");
+            } else if (outputFile.getName().endsWith(".bin")) {
+                openSimulationFile(outputFile);
+                setEditableSpinners(false);
+                openedFileLabel.setText("Selected: " + outputFile.getAbsolutePath()
+                                        + "\nClick here again to reset");
+                openedFileLabel.setVisible(true);
+            }
+        } else {
+            setEditableSpinners(true);
+            openedFileLabel.setVisible(false);
         }
     }
 
