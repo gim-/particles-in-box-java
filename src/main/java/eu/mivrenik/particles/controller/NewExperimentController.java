@@ -134,24 +134,24 @@ public class NewExperimentController {
         fps.getEditor().setText(Integer.toString(fpsVal));
     }
 
-    private void setEditableSpinners(final boolean flag) {
-        particleCountLeft.setEditable(flag);
-        particleCountRight.setEditable(flag);
-        particleRadius.setEditable(flag);
-        initialSpeed.setEditable(flag);
-        speedLoss.setEditable(flag);
-        speedDeltaTop.setEditable(flag);
-        speedDeltaBottom.setEditable(flag);
-        speedDeltaSides.setEditable(flag);
-        boxWidth.setEditable(flag);
-        boxHeight.setEditable(flag);
-        barrierPosX.setEditable(flag);
-        barrierWidth.setEditable(flag);
-        holePosY.setEditable(flag);
-        holeHeight.setEditable(flag);
-        g.setEditable(flag);
-        duration.setEditable(flag);
-        fps.setEditable(flag);
+    private void setDisableSpinners(final boolean flag) {
+        particleCountLeft.setDisable(flag);
+        particleCountRight.setDisable(flag);
+        particleRadius.setDisable(flag);
+        initialSpeed.setDisable(flag);
+        speedLoss.setDisable(flag);
+        speedDeltaTop.setDisable(flag);
+        speedDeltaBottom.setDisable(flag);
+        speedDeltaSides.setDisable(flag);
+        boxWidth.setDisable(flag);
+        boxHeight.setDisable(flag);
+        barrierPosX.setDisable(flag);
+        barrierWidth.setDisable(flag);
+        holePosY.setDisable(flag);
+        holeHeight.setDisable(flag);
+        g.setDisable(flag);
+        duration.setDisable(flag);
+        fps.setDisable(flag);
     }
 
     /**
@@ -248,13 +248,13 @@ public class NewExperimentController {
                 LOG.info("File for opening is not selected");
             } else if (outputFile.getName().endsWith(".bin")) {
                 openSimulationFile(outputFile);
-                setEditableSpinners(false);
+                setDisableSpinners(true);
                 openedFileLabel.setText("Selected: " + outputFile.getAbsolutePath()
                                         + "\nClick here again to reset");
                 openedFileLabel.setVisible(true);
             }
         } else {
-            setEditableSpinners(true);
+            setDisableSpinners(false);
             openedFileLabel.setVisible(false);
         }
     }
