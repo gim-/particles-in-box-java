@@ -95,8 +95,10 @@ public class NewExperimentController {
      */
     public final void onRunClicked() throws Exception {
         if (outputFile == null) {
-            LOG.info("File is not selected");
-        } else if (!outputFile.exists()) {
+            outputFile = new File(outputFileTextField.getText());
+        }
+
+        if (!outputFile.exists()) {
             outputFile.createNewFile();
         }
 
@@ -140,8 +142,7 @@ public class NewExperimentController {
         Simulator simulator = new Simulator(experimentSettings);
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
 
-        if (!isLoaded)
-        {
+        if (!isLoaded) {
             simulationWriter.saveSimulation();
         }
 
