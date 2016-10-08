@@ -48,6 +48,7 @@ import java.util.logging.Logger;
 public class NewExperimentController {
     private static final Logger LOG = Logger.getLogger(NewExperimentController.class.getName());
     private File outputFile = null;
+    private boolean isLoaded = false;
     @FXML
     private Parent rootLayout;
     @FXML
@@ -138,10 +139,13 @@ public class NewExperimentController {
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
-        simulationWriter.saveSimulation();
+
+        if (!isLoaded)
+        {
+            simulationWriter.saveSimulation();
+        }
 
         // Show demonstration set
-        // TODO Pass data to a new stage
         Stage stage = new Stage();
         Scene scene = DemonstrationScene.newInstance(outputFile.getAbsolutePath());
         stage.setTitle("Demonstration");
@@ -159,10 +163,13 @@ public class NewExperimentController {
         fileChooser.setTitle("Choose output file");
         fileChooser.setInitialFileName("particles-in-box-out.bin");
         outputFile = fileChooser.showSaveDialog(rootLayout.getScene().getWindow());
+
         if (outputFile != null) {
             LOG.info("Chosen output file: " + outputFile);
             outputFileTextField.setText(outputFile.getAbsolutePath());
         }
+
+        isLoaded = false;
 
         particleCountLeft.setEditable(true);
         particleCountRight.setEditable(true);
@@ -210,6 +217,7 @@ public class NewExperimentController {
             File file = event.getDragboard().getFiles().get(0);
             // Check if file has a valid extension
             if (file.getName().endsWith(".bin")) {
+                outputFile = file;
                 ExperimentLoader loader = new ExperimentLoader(file);
                 ExperimentSettings experimentSettings = loader.getExperimentSettings();
 
@@ -269,6 +277,7 @@ public class NewExperimentController {
 
                 LOG.info("Dropped file: " + file);
                 success = true;
+                isLoaded = true;
             }
         }
         event.setDropCompleted(success);
