@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Simulator {
     private ExperimentSettings experimentSettings;
+    private ExperimentState lastState;
     private Random random = new Random();
 
     public Simulator(final ExperimentSettings experimentSettings) {
@@ -16,6 +17,9 @@ public class Simulator {
         return random.nextDouble() * (upperBound - lowerBound) + lowerBound;
     }
 
+    public ExperimentState getLastState() {
+        return lastState;
+    }
     public ExperimentSettings getSettings() {
         return experimentSettings;
     }
@@ -271,14 +275,14 @@ public class Simulator {
                     }
                 }
             }
-
             particle.setPosition(x, y).setVelocity(vX, vY);
         }
 
-        return experimentStateBuilder
-                .particles(movedParticles)
-                .settings(experimentSettings)
-                .time(experimentState.getTime() + deltaTime)
-                .build();
+        lastState = experimentStateBuilder
+                    .particles(movedParticles)
+                    .settings(experimentSettings)
+                    .time(experimentState.getTime() + deltaTime)
+                    .build();
+        return lastState;
     }
 }

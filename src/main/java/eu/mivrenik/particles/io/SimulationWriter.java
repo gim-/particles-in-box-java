@@ -20,6 +20,10 @@ public class SimulationWriter {
         this.outputFile = outputFile;
     }
 
+    public Simulator getSimulator() {
+        return simulator;
+    }
+
     public void saveSimulation() throws Exception {
         ExperimentState currState = simulator.initialDistribution();
         ExperimentSettings experimentSettings = simulator.getSettings();
