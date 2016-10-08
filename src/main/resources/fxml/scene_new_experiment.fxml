@@ -308,6 +308,7 @@
     onDragExited="#onDragExited"
     onDragDropped="#onDragDropped"
     onDragOver="#onDragOver"
+    onMouseClicked="#onMouseClicked"
     MigPane.cc="span,grow,push,wrap" />
 
   <!-- Last row -->
