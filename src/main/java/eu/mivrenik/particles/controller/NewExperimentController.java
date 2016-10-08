@@ -29,6 +29,7 @@ import eu.mivrenik.particles.scene.DemonstrationScene;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
@@ -149,6 +150,11 @@ public class NewExperimentController {
         duration.setEditable(false);
         fps.setEditable(false);
 
+        Label fileLabel = new Label(outputFile.getAbsolutePath());
+        fileLabel.setLayoutX(23);
+        fileLabel.setLayoutY(12);
+        dropFileSpace.getChildren().add(fileLabel);
+
         isLoaded = true;
     }
 
@@ -232,6 +238,7 @@ public class NewExperimentController {
             outputFileTextField.setText(outputFile.getAbsolutePath());
         }
 
+        dropFileSpace.getChildren().clear();
         isLoaded = false;
 
         particleCountLeft.setEditable(true);
