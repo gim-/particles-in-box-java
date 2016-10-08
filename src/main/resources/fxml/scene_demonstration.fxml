@@ -52,8 +52,8 @@
   <VBox MigPane.cc="grow,push">
     <BarChart
       fx:id="boltzmannChart"
-      prefWidth="320"
-      prefHeight="320">
+      prefWidth="240"
+      prefHeight="213">
       <xAxis>
         <CategoryAxis side="BOTTOM" />
       </xAxis>
@@ -63,8 +63,8 @@
     </BarChart>
     <LineChart
       fx:id="lineChart"
-      prefWidth="320"
-      prefHeight="320">
+      prefWidth="240"
+      prefHeight="213">
       <xAxis>
         <NumberAxis side="BOTTOM" />
       </xAxis>
@@ -72,6 +72,16 @@
         <NumberAxis side="LEFT" />
       </yAxis>
     </LineChart>
+    <BarChart
+      prefWidth="240"
+      prefHeight="213">
+      <xAxis>
+        <CategoryAxis side="BOTTOM" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT" />
+      </yAxis>
+    </BarChart>
   </VBox>
 </MigPane>
 
