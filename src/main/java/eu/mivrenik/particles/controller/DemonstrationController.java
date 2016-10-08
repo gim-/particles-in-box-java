@@ -4,8 +4,8 @@ import eu.mivrenik.particles.io.ExperimentLoader;
 import eu.mivrenik.particles.model.ExperimentSettings;
 import eu.mivrenik.particles.model.ExperimentState;
 import eu.mivrenik.particles.model.Particle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +26,8 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
@@ -37,11 +38,14 @@ import java.util.stream.DoubleStream;
 public class DemonstrationController implements Initializable {
     private static final Logger LOG = Logger.getLogger(DemonstrationController.class.getName());
 
+    private int currentState;
+    private boolean playbackStarted;
+
     private NumberFormat timeElapsedFormat = new DecimalFormat("#.##");
 
     private ExperimentLoader loader;
 
-    private ObservableList<String> heightChunks = FXCollections.observableArrayList();
+    private Timeline timeline;
 
     @FXML
     private Canvas canvas;
@@ -85,12 +89,79 @@ public class DemonstrationController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        startPlayback();
+    }
+
+    private void startPlayback() {
+        stopTimer();
+
+        playbackStarted = true;
+
+        startTimer();
+
+        playbackButton.setText("▯▯");
+    }
+
+    private void stopPlayback() {
+        stopTimer();
+
+        playbackStarted = false;
+
+        playbackButton.setText("▷");
+    }
+
+    private void startTimer() {
+        long duration = (long) (1000 / fpsInput.getValue());
+
+        timeline = new Timeline(new KeyFrame(Duration.millis(duration),
+                (e) -> this.onStateTimerLaunch()));
+        timeline.play();
+    }
+
+    private void stopTimer() {
+        if (timeline != null) {
+            timeline.stop();
+
+            timeline = null;
+        }
+    }
+
+    private void onStateTimerLaunch() {
+        if (currentState < loader.getStateCount() - 1 && playbackStarted) {
+            int fps = (fpsInput.getEditor().getText().length() > 0)
+                    ? Integer.valueOf(fpsInput.getEditor().getText())
+                    : 1;
+
+            long duration = (long) (1000 / fps);
+
+            try {
+                setState(currentState + 1, true);
+
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(duration),
+                        (e) -> this.onStateTimerLaunch()));
+                timeline.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            stopPlayback();
+        }
     }
 
     private void setState(final int newValue, final boolean updateSlider) throws Exception {
+        if (newValue >= loader.getStateCount()) {
+            // Do something about it.
+            // An exception, perhaps?
+            return;
+        }
+
         ExperimentState state = loader.getState(newValue);
 
         double timeElapsed = state.getTime() / 1_000_000.0;
+
+        currentState = newValue;
+
         timeElapsedLabel.setText("Time elapsed: " + timeElapsedFormat.format(timeElapsed) + "s");
 
         redraw(state);
@@ -222,8 +293,11 @@ public class DemonstrationController implements Initializable {
      * Playback button click callback.
      */
     public void onPlaybackClicked() {
-        // TODO Method stub.
-        LOG.info("Playback clicked");
+        if (playbackStarted) {
+            stopPlayback();
+        } else {
+            startPlayback();
+        }
     }
 
     /**
