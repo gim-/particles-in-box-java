@@ -29,6 +29,7 @@ import eu.mivrenik.particles.scene.DemonstrationScene;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
@@ -52,6 +53,8 @@ public class NewExperimentController {
     private Parent rootLayout;
     @FXML
     private TextField outputFileTextField;
+    @FXML
+    private Label openedFileLabel;
     @FXML
     private Pane dropFileSpace;
     @FXML
@@ -89,13 +92,77 @@ public class NewExperimentController {
     @FXML
     private Spinner<Integer> fps;
 
+    public void openSimulationFile(final File file) throws IOException {
+        outputFile = file;
+        ExperimentLoader loader = new ExperimentLoader(file);
+        ExperimentSettings experimentSettings = loader.getExperimentSettings();
+
+        int particleCountLeftVal = experimentSettings.getParticleCountLeft();
+        int particleCountRightVal = experimentSettings.getParticleCountRight();
+        float particleRadiusVal = experimentSettings.getParticleRadius();
+        float initialSpeedVal = experimentSettings.getInitialSpeed();
+        float speedLossVal = experimentSettings.getSpeedLoss();
+        float speedDeltaTopVal = experimentSettings.getSpeedDeltaTop();
+        float speedDeltaBottomVal = experimentSettings.getSpeedDeltaBottom();
+        float speedDeltaSidesVal = experimentSettings.getSpeedDeltaSides();
+        float boxWidthVal = experimentSettings.getBoxWidth();
+        float boxHeightVal = experimentSettings.getBoxHeight();
+        float barrierPosXVal = experimentSettings.getBarrierPosX();
+        float barrierWidthVal = experimentSettings.getBarrierWidth();
+        float holePosYVal = experimentSettings.getHolePosY();
+        float holeHeightVal = experimentSettings.getHoleHeight();
+        float gVal = experimentSettings.getG();
+        int durationVal = experimentSettings.getDuration();
+        int fpsVal = experimentSettings.getFps();
+
+        particleCountLeft.getEditor().setText(Integer.toString(particleCountLeftVal));
+        particleCountRight.getEditor().setText(Integer.toString(particleCountRightVal));
+        particleRadius.getEditor().setText(Float.toString(particleRadiusVal));
+        initialSpeed.getEditor().setText(Float.toString(initialSpeedVal));
+        speedLoss.getEditor().setText(Float.toString(speedLossVal));
+        speedDeltaTop.getEditor().setText(Float.toString(speedDeltaTopVal));
+        speedDeltaBottom.getEditor().setText(Float.toString(speedDeltaBottomVal));
+        speedDeltaSides.getEditor().setText(Float.toString(speedDeltaSidesVal));
+        boxWidth.getEditor().setText(Float.toString(boxWidthVal));
+        boxHeight.getEditor().setText(Float.toString(boxHeightVal));
+        barrierPosX.getEditor().setText(Float.toString(barrierPosXVal));
+        barrierWidth.getEditor().setText(Float.toString(barrierWidthVal));
+        holePosY.getEditor().setText(Float.toString(holePosYVal));
+        holeHeight.getEditor().setText(Float.toString(holeHeightVal));
+        g.getEditor().setText(Float.toString(gVal));
+        duration.getEditor().setText(Integer.toString(durationVal));
+        fps.getEditor().setText(Integer.toString(fpsVal));
+    }
+
+    private void setEditableSpinners(final boolean flag) {
+        particleCountLeft.setEditable(flag);
+        particleCountRight.setEditable(flag);
+        particleRadius.setEditable(flag);
+        initialSpeed.setEditable(flag);
+        speedLoss.setEditable(flag);
+        speedDeltaTop.setEditable(flag);
+        speedDeltaBottom.setEditable(flag);
+        speedDeltaSides.setEditable(flag);
+        boxWidth.setEditable(flag);
+        boxHeight.setEditable(flag);
+        barrierPosX.setEditable(flag);
+        barrierWidth.setEditable(flag);
+        holePosY.setEditable(flag);
+        holeHeight.setEditable(flag);
+        g.setEditable(flag);
+        duration.setEditable(flag);
+        fps.setEditable(flag);
+    }
+
     /**
      * Run experiment button click callback.
      */
     public final void onRunClicked() throws Exception {
         if (outputFile == null) {
-            LOG.info("File is not selected");
-        } else if (!outputFile.exists()) {
+            outputFile = new File(outputFileTextField.getText());
+        }
+
+        if (!outputFile.exists()) {
             outputFile.createNewFile();
         }
 
@@ -138,10 +205,12 @@ public class NewExperimentController {
         ExperimentSettings experimentSettings = builder.build();
         Simulator simulator = new Simulator(experimentSettings);
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
-        simulationWriter.saveSimulation();
+
+        if (!openedFileLabel.isVisible()) {
+            simulationWriter.saveSimulation();
+        }
 
         // Show demonstration set
-        // TODO Pass data to a new stage
         Stage stage = new Stage();
         Scene scene = DemonstrationScene.newInstance(outputFile.getAbsolutePath());
         stage.setTitle("Demonstration");
@@ -159,28 +228,35 @@ public class NewExperimentController {
         fileChooser.setTitle("Choose output file");
         fileChooser.setInitialFileName("particles-in-box-out.bin");
         outputFile = fileChooser.showSaveDialog(rootLayout.getScene().getWindow());
+
         if (outputFile != null) {
             LOG.info("Chosen output file: " + outputFile);
             outputFileTextField.setText(outputFile.getAbsolutePath());
         }
+    }
 
-        particleCountLeft.setEditable(true);
-        particleCountRight.setEditable(true);
-        particleRadius.setEditable(true);
-        initialSpeed.setEditable(true);
-        speedLoss.setEditable(true);
-        speedDeltaTop.setEditable(true);
-        speedDeltaBottom.setEditable(true);
-        speedDeltaSides.setEditable(true);
-        boxWidth.setEditable(true);
-        boxHeight.setEditable(true);
-        barrierPosX.setEditable(true);
-        barrierWidth.setEditable(true);
-        holePosY.setEditable(true);
-        holeHeight.setEditable(true);
-        g.setEditable(true);
-        duration.setEditable(true);
-        fps.setEditable(true);
+    /**
+     * Called when mouse clicked on area.
+     */
+    public final void onMouseClicked() throws IOException {
+        if (!openedFileLabel.isVisible()) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose file for opening");
+            outputFile = fileChooser.showOpenDialog(rootLayout.getScene().getWindow());
+
+            if (outputFile == null) {
+                LOG.info("File for opening is not selected");
+            } else if (outputFile.getName().endsWith(".bin")) {
+                openSimulationFile(outputFile);
+                setEditableSpinners(false);
+                openedFileLabel.setText("Selected: " + outputFile.getAbsolutePath()
+                                        + "\nClick here again to reset");
+                openedFileLabel.setVisible(true);
+            }
+        } else {
+            setEditableSpinners(true);
+            openedFileLabel.setVisible(false);
+        }
     }
 
     /**
@@ -210,64 +286,7 @@ public class NewExperimentController {
             File file = event.getDragboard().getFiles().get(0);
             // Check if file has a valid extension
             if (file.getName().endsWith(".bin")) {
-                ExperimentLoader loader = new ExperimentLoader(file);
-                ExperimentSettings experimentSettings = loader.getExperimentSettings();
-
-                int particleCountLeftVal = experimentSettings.getParticleCountLeft();
-                int particleCountRightVal = experimentSettings.getParticleCountRight();
-                float particleRadiusVal = experimentSettings.getParticleRadius();
-                float initialSpeedVal = experimentSettings.getInitialSpeed();
-                float speedLossVal = experimentSettings.getSpeedLoss();
-                float speedDeltaTopVal = experimentSettings.getSpeedDeltaTop();
-                float speedDeltaBottomVal = experimentSettings.getSpeedDeltaBottom();
-                float speedDeltaSidesVal = experimentSettings.getSpeedDeltaSides();
-                float boxWidthVal = experimentSettings.getBoxWidth();
-                float boxHeightVal = experimentSettings.getBoxHeight();
-                float barrierPosXVal = experimentSettings.getBarrierPosX();
-                float barrierWidthVal = experimentSettings.getBarrierWidth();
-                float holePosYVal = experimentSettings.getHolePosY();
-                float holeHeightVal = experimentSettings.getHoleHeight();
-                float gVal = experimentSettings.getG();
-                int durationVal = experimentSettings.getDuration();
-                int fpsVal = experimentSettings.getFps();
-
-                particleCountLeft.getEditor().setText(Integer.toString(particleCountLeftVal));
-                particleCountRight.getEditor().setText(Integer.toString(particleCountRightVal));
-                particleRadius.getEditor().setText(Float.toString(particleRadiusVal));
-                initialSpeed.getEditor().setText(Float.toString(initialSpeedVal));
-                speedLoss.getEditor().setText(Float.toString(speedLossVal));
-                speedDeltaTop.getEditor().setText(Float.toString(speedDeltaTopVal));
-                speedDeltaBottom.getEditor().setText(Float.toString(speedDeltaBottomVal));
-                speedDeltaSides.getEditor().setText(Float.toString(speedDeltaSidesVal));
-                boxWidth.getEditor().setText(Float.toString(boxWidthVal));
-                boxHeight.getEditor().setText(Float.toString(boxHeightVal));
-                barrierPosX.getEditor().setText(Float.toString(barrierPosXVal));
-                barrierWidth.getEditor().setText(Float.toString(barrierWidthVal));
-                holePosY.getEditor().setText(Float.toString(holePosYVal));
-                holeHeight.getEditor().setText(Float.toString(holeHeightVal));
-                g.getEditor().setText(Float.toString(gVal));
-                duration.getEditor().setText(Integer.toString(durationVal));
-                fps.getEditor().setText(Integer.toString(fpsVal));
-
-                particleCountLeft.setEditable(false);
-                particleCountRight.setEditable(false);
-                particleRadius.setEditable(false);
-                initialSpeed.setEditable(false);
-                speedLoss.setEditable(false);
-                speedDeltaTop.setEditable(false);
-                speedDeltaBottom.setEditable(false);
-                speedDeltaSides.setEditable(false);
-                boxWidth.setEditable(false);
-                boxHeight.setEditable(false);
-                barrierPosX.setEditable(false);
-                barrierWidth.setEditable(false);
-                holePosY.setEditable(false);
-                holeHeight.setEditable(false);
-                g.setEditable(false);
-                duration.setEditable(false);
-                fps.setEditable(false);
-
-                LOG.info("Dropped file: " + file);
+                openSimulationFile(file);
                 success = true;
             }
         }

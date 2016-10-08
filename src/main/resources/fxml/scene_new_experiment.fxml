@@ -308,7 +308,15 @@
     onDragExited="#onDragExited"
     onDragDropped="#onDragDropped"
     onDragOver="#onDragOver"
-    MigPane.cc="span,grow,push,wrap" />
+    onMouseClicked="#onMouseClicked"
+    MigPane.cc="span,grow,push,wrap">
+    <children>
+            <Label fx:id="openedFileLabel"
+                   layoutX="23"
+                   layoutY="12"
+                   visible="false"/>
+    </children>
+  </Pane>
 
   <!-- Last row -->
   <ButtonBar MigPane.cc="span,grow">
