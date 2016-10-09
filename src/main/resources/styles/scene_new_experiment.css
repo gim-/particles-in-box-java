@@ -6,21 +6,28 @@
 
 .option-group-title {
 	-fx-font-weight: bold;
-	-fx-font-size: 14;
+	-fx-font-size: 14.0;
 }
 
 .option-title {
-	-fx-padding: 0 0 0 5;
+	-fx-padding: 0.0 0.0 0.0 5.0;
 }
 
 .option-input {
-	-fx-max-width: 100;
+	-fx-max-width: 100.0;
 }
 
 #dropFileSpace {
 	-fx-border-style: dashed;
-	-fx-border-radius: 30;
-	-fx-border-width: 5;
-	-fx-border-insets: 5 10 10 10;
-	-fx-border-color: rgb(186,189,182);
+	-fx-border-radius: 30.0;
+	-fx-border-width: 5.0;
+	-fx-border-insets: 5.0 10.0 10.0 10.0;
+	-fx-border-color: rgb(186.0,189.0,182.0);
+}
+
+#dropFileLabel {
+    -fx-font-size: 20.0pt;
+    -fx-text-fill: rgb(186.0,189.0,182.0);
+    -fx-text-alignment: center;
+    -fx-font-weight: bold;
 }

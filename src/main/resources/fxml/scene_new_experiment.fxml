@@ -31,7 +31,10 @@
   <Label
     text="Count (left side)"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="particleCountLeft" editable="true" >
+  <Spinner
+    styleClass="option-input"
+    fx:id="particleCountLeft"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.IntegerSpinnerValueFactory
         min="1"
@@ -43,7 +46,10 @@
   <Label
     text="Top"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedDeltaTop" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="speedDeltaTop"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -74,7 +80,10 @@
   <Label
     text="Count (right side)"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="particleCountRight" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="particleCountRight"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.IntegerSpinnerValueFactory
         min="1"
@@ -86,7 +95,10 @@
   <Label
     text="Bottom"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedDeltaBottom" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="speedDeltaBottom"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -117,7 +129,10 @@
   <Label
     text="Radius"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="particleRadius" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="particleRadius"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -129,7 +144,10 @@
   <Label
     text="Sides"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedDeltaSides" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="speedDeltaSides"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -160,7 +178,10 @@
   <Label
     text="Initial speed"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="initialSpeed" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="initialSpeed"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -195,7 +216,10 @@
   <Label
     text="Speed loss factor"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="speedLoss" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="speedLoss"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -207,7 +231,10 @@
   <Label
     text="g"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="g" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="g"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.DoubleSpinnerValueFactory
         min="0.01"
@@ -242,7 +269,10 @@
   <Label
     text="Min. to simulate"
     styleClass="option-title" />
-  <Spinner styleClass="option-input" fx:id="duration" editable="true">
+  <Spinner
+    styleClass="option-input"
+    fx:id="duration"
+    editable="true">
     <valueFactory>
       <SpinnerValueFactory.IntegerSpinnerValueFactory
         min="1"
@@ -274,6 +304,7 @@
     fx:id="outputFileTextField"
     MigPane.cc="grow" />
   <Button
+    fx:id="outputFileChoiceButton"
     text="..."
     onMouseClicked="#onChooseOutputFileClicked" />
   <Label
@@ -301,7 +332,7 @@
     styleClass="option-group-title" />
 
   <!-- 10th row -->
-  <Pane
+  <StackPane
     fx:id="dropFileSpace"
     prefHeight="200"
     onDragEntered="#onDragEntered"
@@ -310,13 +341,10 @@
     onDragOver="#onDragOver"
     onMouseClicked="#onMouseClicked"
     MigPane.cc="span,grow,push,wrap">
-    <children>
-            <Label fx:id="openedFileLabel"
-                   layoutX="23"
-                   layoutY="12"
-                   visible="false"/>
-    </children>
-  </Pane>
+    <Label
+      fx:id="dropFileLabel"
+      text="Drag and drop file here or click to select" />
+  </StackPane>
 
   <!-- Last row -->
   <ButtonBar MigPane.cc="span,grow">

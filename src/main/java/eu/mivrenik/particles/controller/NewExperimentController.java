@@ -57,13 +57,16 @@ import java.util.logging.Logger;
  */
 public class NewExperimentController {
     private static final Logger LOG = Logger.getLogger(NewExperimentController.class.getName());
-    private File outputFile = null;
+    private File outputFile;
+    private boolean fileSelected;
     @FXML
     private Parent rootLayout;
     @FXML
     private TextField outputFileTextField;
     @FXML
-    private Label openedFileLabel;
+    private Button outputFileChoiceButton;
+    @FXML
+    private Label dropFileLabel;
     @FXML
     private Pane dropFileSpace;
     @FXML
@@ -124,6 +127,11 @@ public class NewExperimentController {
         int durationVal = experimentSettings.getDuration();
         int fpsVal = experimentSettings.getFps();
 
+        setDisableSpinners(true);
+        dropFileLabel.setText("Selected: " + outputFile.getAbsolutePath()
+                + "\nClick here again to reset");
+        fileSelected = true;
+
         particleCountLeft.getEditor().setText(Integer.toString(particleCountLeftVal));
         particleCountRight.getEditor().setText(Integer.toString(particleCountRightVal));
         particleRadius.getEditor().setText(Float.toString(particleRadiusVal));
@@ -161,6 +169,8 @@ public class NewExperimentController {
         g.setDisable(flag);
         duration.setDisable(flag);
         fps.setDisable(flag);
+        outputFileTextField.setDisable(flag);
+        outputFileChoiceButton.setDisable(flag);
     }
 
     /**
@@ -198,7 +208,7 @@ public class NewExperimentController {
         int seedVal = 255;
 
         builder.particleCount(particleCountLeftVal,
-                                 particleCountRightVal);
+                particleCountRightVal);
         builder.initialSpeed(initialSpeedVal);
         builder.speedLoss(speedLossVal);
         builder.speedDelta(speedDeltaTopVal, speedDeltaSidesVal, speedDeltaBottomVal);
@@ -215,7 +225,7 @@ public class NewExperimentController {
         Simulator simulator = new Simulator(experimentSettings);
         SimulationWriter simulationWriter = new SimulationWriter(simulator, outputFile);
 
-        if (openedFileLabel.isVisible()) {
+        if (fileSelected) {
             // Show demonstration set
             Stage stage = new Stage();
             Scene scene = DemonstrationScene.newInstance(outputFile.getAbsolutePath());
@@ -336,7 +346,7 @@ public class NewExperimentController {
      * Called when mouse clicked on area.
      */
     public final void onMouseClicked() throws IOException {
-        if (!openedFileLabel.isVisible()) {
+        if (!fileSelected) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose file for opening");
             outputFile = fileChooser.showOpenDialog(rootLayout.getScene().getWindow());
@@ -345,16 +355,11 @@ public class NewExperimentController {
                 LOG.info("File for opening is not selected");
             } else if (outputFile.getName().endsWith(".bin")) {
                 openSimulationFile(outputFile);
-                setDisableSpinners(true);
-
-                openedFileLabel.setText("Selected: " + outputFile.getAbsolutePath()
-                                        + "\nClick here again to reset");
-                openedFileLabel.setVisible(true);
             }
         } else {
-
             setDisableSpinners(false);
-            openedFileLabel.setVisible(false);
+            fileSelected = false;
+            dropFileLabel.setText("Drag and drop file here or click to select");
         }
     }
 
@@ -362,14 +367,15 @@ public class NewExperimentController {
      * Called when drag entered the file drop area.
      */
     public final void onDragEntered() {
-        // TODO Show "drop" message
+        dropFileLabel.setText("Drop it!");
     }
 
     /**
      * Called when drag exited from the file drop area.
      */
     public final void onDragExited() {
-        // TODO Restore default message
+        if (!fileSelected)
+            dropFileLabel.setText("Drag and drop file here or click to select");
     }
 
     /**
