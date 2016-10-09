@@ -41,7 +41,7 @@ public class DemonstrationController implements Initializable {
     private int currentState;
     private boolean playbackStarted;
 
-    private NumberFormat timeElapsedFormat = new DecimalFormat("#.##");
+    private NumberFormat timeElapsedFormat = new DecimalFormat("0.00");
 
     private ExperimentLoader loader;
 
