@@ -198,15 +198,24 @@ public class DemonstrationController implements Initializable {
         double particleR = settings.getParticleRadius();
 
         gc.clearRect(0, 0, settings.getBoxWidth(), settings.getBoxHeight());
-        gc.setFill(Color.WHITE);
-        gc.fillRect(barrierXMin, 0, barrierWidth, lowerBarrierHeight);
-        gc.fillRect(barrierXMin, settings.getBoxHeight() - upperBarrierHeight, barrierWidth, upperBarrierHeight);
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(0.02);
+        gc.strokeRect(
+                barrierXMin + 0.01,
+                -0.01,
+                barrierWidth,
+                lowerBarrierHeight);
+        gc.strokeRect(
+                barrierXMin + 0.01,
+                settings.getBoxHeight() - upperBarrierHeight + 0.01,
+                barrierWidth,
+                upperBarrierHeight);
 
         for (Particle p : state.getParticles()) {
             if ((p.getId() & 1) == 0) {
-                gc.setFill(Color.INDIANRED);
+                gc.setFill(Color.RED);
             } else {
-                gc.setFill(Color.BLUEVIOLET);
+                gc.setFill(Color.SKYBLUE);
             }
 
             gc.fillOval(p.getPosX(), p.getPosY(), particleR, particleR);
