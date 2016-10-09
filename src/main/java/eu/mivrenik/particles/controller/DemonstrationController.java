@@ -175,6 +175,10 @@ public class DemonstrationController implements Initializable {
 
     private void initializeCanvas() {
         ExperimentSettings settings = loader.getExperimentSettings();
+
+        // Adjust canvas size
+        canvas.setWidth(canvas.getHeight() * settings.getBoxWidth() / settings.getBoxHeight());
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double mxx = canvas.getWidth() / settings.getBoxWidth();
         double myy = -canvas.getHeight() / settings.getBoxHeight();
@@ -265,7 +269,6 @@ public class DemonstrationController implements Initializable {
         int[] y = new int[binsNum];
         XYChart.Series<String, Number> boltzmannSeries = new XYChart.Series<>();
 
-
         boltzmannChart.getData().clear();
 
         for (int i = 0; i < binsNum; i++) {
@@ -280,14 +283,13 @@ public class DemonstrationController implements Initializable {
 
         for (int i = 0; i < binsNum; i++) {
             boltzmannSeries.getData().add(new XYChart.Data<>(dataFormat.format(x[i]),
-                                                            y[i]));
+                    y[i]));
         }
 
         boltzmannChart.getData().add(boltzmannSeries);
         boltzmannChart.setBarGap(0.0);
         boltzmannChart.setCategoryGap(0.0);
     }
-
 
     /**
      * Playback button click callback.
@@ -309,7 +311,7 @@ public class DemonstrationController implements Initializable {
      * @param newValue
      *            Value changed to.
      */
-    public void onTimeSliderValueChanged(final Number oldValue, final Number newValue)  {
+    public void onTimeSliderValueChanged(final Number oldValue, final Number newValue) {
         try {
             setState(newValue.intValue(), false);
         } catch (Exception e) {
