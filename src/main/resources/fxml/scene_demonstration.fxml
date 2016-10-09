@@ -75,6 +75,7 @@
       </yAxis>
     </LineChart>
     <BarChart
+      fx:id="particlesNumBar"
       prefWidth="240"
       prefHeight="213"
       animated="false">
@@ -88,25 +89,31 @@
   </VBox>
   <VBox MigPane.cc="grow,push">
     <LineChart
+      fx:id="leftPartLine"
+      title="Left part"
+      createSymbols="false"
       prefWidth="240"
       prefHeight="213"
       animated="false">
       <xAxis>
-        <NumberAxis side="BOTTOM" />
+        <NumberAxis side="BOTTOM" label="t, sec" />
       </xAxis>
       <yAxis>
-        <NumberAxis side="LEFT" />
+        <NumberAxis side="LEFT" label="N" />
       </yAxis>
     </LineChart>
     <LineChart
+      fx:id="rightPartLine"
+      title="Right part"
+      createSymbols="false"
       prefWidth="240"
       prefHeight="213"
       animated="false">
       <xAxis>
-        <NumberAxis side="BOTTOM" />
+        <NumberAxis side="BOTTOM" label="t, sec" />
       </xAxis>
       <yAxis>
-        <NumberAxis side="LEFT" />
+        <NumberAxis side="LEFT" label="N" />
       </yAxis>
     </LineChart>
   </VBox>

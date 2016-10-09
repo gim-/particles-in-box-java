@@ -61,6 +61,12 @@ public class DemonstrationController implements Initializable {
     private BarChart<String, Number> boltzmannChart;
     @FXML
     private LineChart<Double, Double> lineChart;
+    @FXML
+    private BarChart<String, Number> particlesNumBar;
+    @FXML
+    private LineChart<Double, Integer> leftPartLine;
+    @FXML
+    private LineChart<Double, Integer> rightPartLine;
 
     public DemonstrationController(final String filePath) throws IOException {
         File sourceFile = new File(filePath);
@@ -72,6 +78,12 @@ public class DemonstrationController implements Initializable {
         lineChart.setCreateSymbols(false);
         lineChart.setLegendVisible(false);
         boltzmannChart.setLegendVisible(false);
+
+        try {
+            plotParticlesNumLines();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         timeSlider.setMax((double) loader.getStateCount() - 1);
         timeSlider.setMinorTickCount(1);
@@ -167,6 +179,7 @@ public class DemonstrationController implements Initializable {
         redraw(state);
         redrawMaxwellDistribution(state, 20);
         redrawBoltzmannDistribution(state, 17);
+        redrawParticlesNum(state);
 
         if (updateSlider) {
             timeSlider.setValue((double) newValue);
@@ -220,6 +233,109 @@ public class DemonstrationController implements Initializable {
 
             gc.fillOval(p.getPosX(), p.getPosY(), particleR, particleR);
         }
+    }
+
+    private void plotParticlesNumLines() throws Exception {
+        XYChart.Series leftPartSeries = new XYChart.Series<>();
+        XYChart.Series rightPartSeries = new XYChart.Series<>();
+
+        leftPartSeries.setName("Left particles");
+        rightPartSeries.setName("Right particles");
+
+        double leftBound = loader.getExperimentSettings().getBarrierPosX()
+                - 0.5 * loader.getExperimentSettings().getBarrierWidth();
+        double rightBound = loader.getExperimentSettings().getBarrierPosX()
+                + 0.5 * loader.getExperimentSettings().getBarrierWidth();
+
+        XYChart.Series<Double, Integer> leftPartFirstTypeSeries = new XYChart.Series<Double, Integer>();
+        XYChart.Series<Double, Integer> leftPartSecondTypeSeries = new XYChart.Series<Double, Integer>();
+        XYChart.Series<Double, Integer> rightPartFirstTypeSeries = new XYChart.Series<Double, Integer>();
+        XYChart.Series<Double, Integer> rightPartSecondTypeSeries = new XYChart.Series<Double, Integer>();
+
+        leftPartFirstTypeSeries.setName("Left particles");
+        leftPartSecondTypeSeries.setName("Right particles");
+        rightPartFirstTypeSeries.setName("Left particles");
+        rightPartSecondTypeSeries.setName("Right particles");
+
+        for (int i = 0; i < loader.getStateCount(); i += Math.floorDiv(loader.getStateCount(), 10)) {
+            ExperimentState state = loader.getState(i);
+            int leftFirstTypeNum = 0;
+            int leftSecondTypeNum = 0;
+            int rightFirstTypeNum = 0;
+            int rightSecondTypeNum = 0;
+
+            for (Particle particle : state.getParticles()) {
+                if (particle.getPosX() < leftBound) {
+                    if ((particle.getId() & 1) == 0) {
+                        leftFirstTypeNum++;
+                    } else {
+                        leftSecondTypeNum++;
+                    }
+                } else if (particle.getPosX() > rightBound) {
+                    if ((particle.getId() & 1) == 0) {
+                        rightFirstTypeNum++;
+                    } else {
+                        rightSecondTypeNum++;
+                    }
+                }
+            }
+
+            double currTimeSec = state.getTime() / 1000000.0;
+            leftPartFirstTypeSeries.getData().add(new XYChart.Data<Double, Integer>(currTimeSec,
+                    leftFirstTypeNum));
+            leftPartSecondTypeSeries.getData().add(new XYChart.Data<Double, Integer>(currTimeSec,
+                    leftSecondTypeNum));
+            rightPartFirstTypeSeries.getData().add(new XYChart.Data<Double, Integer>(currTimeSec,
+                    rightFirstTypeNum));
+            rightPartSecondTypeSeries.getData().add(new XYChart.Data<Double, Integer>(currTimeSec,
+                    rightSecondTypeNum));
+        }
+
+        leftPartLine.getData().addAll(leftPartFirstTypeSeries, leftPartSecondTypeSeries);
+        rightPartLine.getData().addAll(rightPartFirstTypeSeries, rightPartSecondTypeSeries);
+    }
+
+    private void redrawParticlesNum(final ExperimentState state) {
+        // first type of particles - particles which originally located on the left side
+        // second type of particles - particles which originally located on the right side
+        int leftFirstTypeNum = 0;
+        int leftSecondTypeNum = 0;
+        int rightFirstTypeNum = 0;
+        int rightSecondTypeNum = 0;
+
+        XYChart.Series leftPartSeries = new XYChart.Series<>();
+        XYChart.Series rightPartSeries = new XYChart.Series<>();
+
+        leftPartSeries.setName("Left particles");
+        rightPartSeries.setName("Right particles");
+
+        double leftBound = state.getSettings().getBarrierPosX() - 0.5 * state.getSettings().getBarrierWidth();
+        double rightBound = state.getSettings().getBarrierPosX() + 0.5 * state.getSettings().getBarrierWidth();
+
+        for (Particle particle : state.getParticles()) {
+            if (particle.getPosX() < leftBound) {
+                if ((particle.getId() & 1) == 0) {
+                    leftFirstTypeNum++;
+                } else {
+                    leftSecondTypeNum++;
+                }
+            } else if (particle.getPosX() > rightBound) {
+                if ((particle.getId() & 1) == 0) {
+                    rightFirstTypeNum++;
+                } else {
+                    rightSecondTypeNum++;
+                }
+            }
+        }
+
+        leftPartSeries.getData().add(new XYChart.Data("Left part", leftFirstTypeNum));
+        leftPartSeries.getData().add(new XYChart.Data("Right part", rightFirstTypeNum));
+
+        rightPartSeries.getData().add(new XYChart.Data("Left part", leftSecondTypeNum));
+        rightPartSeries.getData().add(new XYChart.Data("Right part", rightSecondTypeNum));
+
+        particlesNumBar.getData().clear();
+        particlesNumBar.getData().addAll(leftPartSeries, rightPartSeries);
     }
 
     private void redrawMaxwellDistribution(final ExperimentState state, final int binsNum) {
