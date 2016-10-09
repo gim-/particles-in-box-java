@@ -6,6 +6,7 @@ import eu.mivrenik.particles.model.ExperimentState;
 import eu.mivrenik.particles.model.Particle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -127,7 +128,7 @@ public class DemonstrationController implements Initializable {
         long duration = (long) (1000 / fpsInput.getValue());
 
         timeline = new Timeline(new KeyFrame(Duration.millis(duration),
-                (e) -> this.onStateTimerLaunch()));
+                this::onStateTimerLaunch));
         timeline.play();
     }
 
@@ -139,7 +140,7 @@ public class DemonstrationController implements Initializable {
         }
     }
 
-    private void onStateTimerLaunch() {
+    private void onStateTimerLaunch(final ActionEvent evt) {
         if (currentState < loader.getStateCount() - 1 && playbackStarted) {
             int fps = (fpsInput.getEditor().getText().length() > 0)
                     ? Integer.valueOf(fpsInput.getEditor().getText())
@@ -148,11 +149,11 @@ public class DemonstrationController implements Initializable {
             long duration = (long) (1000 / fps);
 
             try {
-                setState(currentState + 1, true);
-
                 Timeline timeline = new Timeline(new KeyFrame(Duration.millis(duration),
-                        (e) -> this.onStateTimerLaunch()));
+                        this::onStateTimerLaunch));
                 timeline.play();
+
+                setState(currentState + 1, true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
