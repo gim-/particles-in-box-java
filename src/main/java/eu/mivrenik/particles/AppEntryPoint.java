@@ -21,6 +21,7 @@
  */
 package eu.mivrenik.particles;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import eu.mivrenik.particles.scene.NewExperimentScene;
@@ -41,6 +42,7 @@ public class AppEntryPoint extends Application {
      *            Launch arguments
      */
     public static void main(final String[] args) {
+        Locale.setDefault(Locale.US);
         launch(args);
     }
 
