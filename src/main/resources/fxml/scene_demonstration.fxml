@@ -52,26 +52,28 @@
   <VBox MigPane.cc="grow,push">
     <BarChart
       fx:id="boltzmannChart"
+      legendVisible="false"
       prefWidth="240"
       prefHeight="213"
       animated="false">
       <xAxis>
-        <CategoryAxis side="BOTTOM" />
+        <CategoryAxis side="BOTTOM" label="height, m" />
       </xAxis>
       <yAxis>
-        <NumberAxis side="LEFT" />
+        <NumberAxis side="LEFT" label="particles, N" />
       </yAxis>
     </BarChart>
     <LineChart
       fx:id="lineChart"
+      createSymbols="false"
       prefWidth="240"
       prefHeight="213"
       animated="false">
       <xAxis>
-        <NumberAxis side="BOTTOM" />
+        <NumberAxis side="BOTTOM" label="velocity, m/s" />
       </xAxis>
       <yAxis>
-        <NumberAxis side="LEFT" />
+        <NumberAxis side="LEFT" label="particles density" />
       </yAxis>
     </LineChart>
     <BarChart
@@ -83,7 +85,7 @@
         <CategoryAxis side="BOTTOM" />
       </xAxis>
       <yAxis>
-        <NumberAxis side="LEFT" />
+        <NumberAxis side="LEFT" label="particles, N" />
       </yAxis>
     </BarChart>
   </VBox>
