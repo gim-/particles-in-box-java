@@ -272,16 +272,18 @@ public class NewExperimentController {
             outputFile = new File(outputFileTextField.getText());
         }
 
-        if (outputFileTextField.getText().isEmpty()) {
-            String message = "File for simulation is not selected";
-            Dialog.createExceptionDialog(message, new FileNotFoundException(message));
-            return;
-        }
+        if (!fileSelected) {
+            if (outputFileTextField.getText().isEmpty()) {
+                String message = "File for simulation is not selected";
+                Dialog.createExceptionDialog(message, new FileNotFoundException(message));
+                return;
+            }
 
-        if (!outputFileTextField.getText().endsWith(".bin")) {
-            String message = "Incorrect extension of the saved file (required .bin)";
-            Dialog.createExceptionDialog(message, new IllegalArgumentException(message));
-            return;
+            if (!outputFileTextField.getText().endsWith(".bin")) {
+                String message = "Incorrect extension of the saved file (required .bin)";
+                Dialog.createExceptionDialog(message, new IllegalArgumentException(message));
+                return;
+            }
         }
 
         if (!outputFile.exists()) {
