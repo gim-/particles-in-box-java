@@ -76,10 +76,6 @@ public class DemonstrationController implements Initializable {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        lineChart.setCreateSymbols(false);
-        lineChart.setLegendVisible(false);
-        boltzmannChart.setLegendVisible(false);
-
         try {
             plotParticlesNumLines();
         } catch (Exception e) {
@@ -351,6 +347,9 @@ public class DemonstrationController implements Initializable {
 
         XYChart.Series<Double, Double> experimentalSeries = new XYChart.Series<>();
         XYChart.Series<Double, Double> theoreticalSeries = new XYChart.Series<>();
+
+        experimentalSeries.setName("experimental");
+        theoreticalSeries.setName("theoretical");
 
         lineChart.getData().clear();
 

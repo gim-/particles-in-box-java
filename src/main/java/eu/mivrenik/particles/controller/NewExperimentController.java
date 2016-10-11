@@ -286,7 +286,7 @@ public class NewExperimentController {
             }
         }
 
-        if (!outputFile.exists()) {
+        if (!outputFile.exists() && !outputFile.getName().endsWith("bin")) {
             outputFile.createNewFile();
         }
 
