@@ -272,14 +272,18 @@ public class NewExperimentController {
             outputFile = new File(outputFileTextField.getText());
         }
 
-        if (outputFileTextField.getText().isEmpty()) {
-            String message = "File for simulation is not selected";
-            Dialog.createExceptionDialog(message, new FileNotFoundException(message));
-            return;
-        } else if (!outputFileTextField.getText().endsWith("bin")) {
-            String message = "Incorrect extension of the saved file (required .bin)";
-            Dialog.createExceptionDialog(message, new IllegalArgumentException(message));
-            return;
+        if (!fileSelected) {
+            if (outputFileTextField.getText().isEmpty()) {
+                String message = "File for simulation is not selected";
+                Dialog.createExceptionDialog(message, new FileNotFoundException(message));
+                return;
+            }
+
+            if (!outputFileTextField.getText().endsWith(".bin")) {
+                String message = "Incorrect extension of the saved file (required .bin)";
+                Dialog.createExceptionDialog(message, new IllegalArgumentException(message));
+                return;
+            }
         }
 
         if (!outputFile.exists() && !outputFile.getName().endsWith("bin")) {
@@ -372,6 +376,9 @@ public class NewExperimentController {
                 LOG.info("File for opening is not selected");
             } else if (outputFile.getName().endsWith(".bin")) {
                 openSimulationFile(outputFile);
+            } else {
+                String message = "Incorrect extension of the opened file (required .bin)";
+                Dialog.createExceptionDialog(message, new IllegalArgumentException(message));
             }
         } else {
             setDisableSpinners(false);
@@ -410,6 +417,9 @@ public class NewExperimentController {
             if (file.getName().endsWith(".bin")) {
                 openSimulationFile(file);
                 success = true;
+            } else {
+                String message = "Incorrect extension of the opened file (required .bin)";
+                Dialog.createExceptionDialog(message, new IllegalArgumentException(message));
             }
         }
         event.setDropCompleted(success);
